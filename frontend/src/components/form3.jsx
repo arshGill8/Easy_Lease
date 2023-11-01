@@ -125,11 +125,11 @@ export default function Form3({ contactData, handleContactData }) {
             <div className="">
               <label>Yes</label>
               <input
-                placeholder=" e.g., indoor/outdoor, location"
                 name="emailNotice"
-                type="text"
-                onChange={(e) => handleContactData(e)}
-                value={emailNotice}
+                type="radio"
+                onChange={handleContactData}
+                checked={emailNotice === "Yes"}
+                value="Yes"
                 className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
               />
             </div>
@@ -138,25 +138,31 @@ export default function Form3({ contactData, handleContactData }) {
               <input
                 name="emailNotice"
                 type="radio"
-                value="false"
-                checked={!emailNotice}
+                value="No"
+                checked={emailNotice === "No"}
                 onChange={handleContactData}
                 className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
               />
             </div>
           </div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            If yes, provide email addresses:{" "}
-          </label>
-          <input
-            placeholder=" e.g., indoor/outdoor, location"
-            name="email"
-            type="text"
-            onChange={(e) => handleContactData(e)}
-            value={email}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
+
+          {emailNotice === "Yes" && (
+            <>
+              <label className="block my-3 text-md font-medium text-gray-900">
+                If yes, provide email addresses:{" "}
+              </label>
+              <input
+                placeholder=" e.g., indoor/outdoor, location"
+                name="email"
+                type="text"
+                onChange={(e) => handleContactData(e)}
+                value={email}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </>
+          )}
         </div>
+
         <div className="flex items-center">
           <p className="block my-3 text-md font-medium text-gray-900 w-3/4">
             The landlord is providing phone and/or email contact information for
@@ -164,15 +170,16 @@ export default function Form3({ contactData, handleContactData }) {
             phone and/or email contact information for emergencies or day-to-day
             communications:
           </p>
+
           <div className="flex gap-6 w-1/4">
             <div className="">
               <label>Yes</label>
               <input
-                placeholder=" e.g., indoor/outdoor, location"
                 name="emCont"
-                type="text"
-                onChange={(e) => handleContactData(e)}
-                value={emCont}
+                type="radio"
+                value="Yes"
+                checked={emCont === "Yes"}
+                onChange={handleContactData}
                 className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
               />
             </div>
@@ -181,24 +188,27 @@ export default function Form3({ contactData, handleContactData }) {
               <input
                 name="emCont"
                 type="radio"
-                value="false"
-                checked={!emCont}
+                value="No"
+                checked={emCont === "No"}
                 onChange={handleContactData}
                 className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
               />
             </div>
           </div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            If yes, provide information:{" "}
-          </label>
-          <input
-            placeholder=" e.g., indoor/outdoor, location"
-            name="emContInfo"
-            type="text"
-            onChange={(e) => handleContactData(e)}
-            value={emContInfo}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
+          {emCont === "Yes" && (
+            <>
+              <label className="block my-3 text-md font-medium text-gray-900">
+                If yes, provide information:
+              </label>
+              <input
+                name="emContInfo"
+                type="text"
+                onChange={handleContactData}
+                value={emContInfo}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </>
+          )}
         </div>
       </form>
     </div>

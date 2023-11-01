@@ -41,13 +41,15 @@ export default function App() {
 
   const [leaseTermData, setLeaseTermData] = useState({
     startDate: "",
-    fixedTen: "",
+    tenancyType: "",
     fixedTenDate: "",
     monthTen: "",
     otherTen: "",
+    otherTenDetails: "",
+
     rentDay: "",
     monthly: "",
-    weekly: "",
+    other: "",
     baseRent: "",
 
     parkingRent: "",
@@ -185,8 +187,9 @@ export default function App() {
     }));
   };
   const handleLeaseTermData = (e) => {
-    setRentalData((prevRentalData) => ({
-      ...prevRentalData,
+    console.log(e.target.value);
+    setLeaseTermData((prevLeaseTermData) => ({
+      ...prevLeaseTermData,
       [e.target.name]: e.target.value,
     }));
   };
