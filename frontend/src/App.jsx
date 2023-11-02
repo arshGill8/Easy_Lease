@@ -48,6 +48,7 @@ export default function App() {
     otherTenDetails: "",
 
     rentDay: "",
+    rentType: "",
     monthly: "",
     other: "",
     baseRent: "",
@@ -195,15 +196,15 @@ export default function App() {
   };
 
   const handleUtilityData = (e) => {
-    setRentalData((prevRentalData) => ({
-      ...prevRentalData,
+    setUtility((prevUtilityData) => ({
+      ...prevUtilityData,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleDepositData = (e) => {
-    setRentalData((prevRentalData) => ({
-      ...prevRentalData,
+    setDepositData((prevRentalDepositData) => ({
+      ...prevRentalDepositData,
       [e.target.name]: e.target.value,
     }));
   };

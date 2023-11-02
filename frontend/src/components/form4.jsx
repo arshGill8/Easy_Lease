@@ -1,10 +1,30 @@
 export default function Form4({ leaseTermData, handleLeaseTermData }) {
   const {
     startDate,
+    tenancyType,
     fixedTenDate,
 
     otherTenDetails,
-    tenancyType,
+
+    rentDay,
+    rentType,
+
+    otherRentDetails,
+    baseRent,
+
+    parkingRent,
+    otherUtil1,
+    otherUtil2,
+    otherUtil3,
+    totalRent,
+    payTo,
+    payMethod,
+    partPeriod,
+    partRent,
+    partDate,
+    coverDateFrom,
+    coverDateTo,
+    nsfCharge,
   } = leaseTermData;
 
   return (
@@ -21,7 +41,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
           <input
             name="startDate"
             type="date"
-            onChange={(e) => handleLeaseTermData(e)}
+            onChange={handleLeaseTermData}
             value={startDate}
             className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
@@ -43,20 +63,21 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               onChange={handleLeaseTermData}
               className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
             />
-            <label>ending on:</label>
-
-            <input
-              name="fixedTenDate"
-              type="date"
-              onChange={(e) => handleLeaseTermData(e)}
-              value={fixedTenDate}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+            {tenancyType === "fixed" && (
+              <>
+                <label>ending on:</label>
+                <input
+                  name="fixedTenDate"
+                  type="date"
+                  onChange={handleLeaseTermData}
+                  value={fixedTenDate}
+                  className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                />
+              </>
+            )}
           </div>
-
           <div>
             <label className="">Monthly Tenancy</label>
-
             <input
               name="tenancyType"
               type="radio"
@@ -83,7 +104,6 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
                 <input
                   type="text"
                   value={otherTenDetails}
-                  name=""
                   onChange={handleLeaseTermData}
                   className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
                 ></input>
@@ -95,48 +115,150 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
         <h1>Rent</h1>
         <div>
           {" "}
-          <p placeholder="(e.g., first, second, last) day ">
-            Rent is to be paid on the <input></input>
+          <p>
+            Rent is to be paid on the{" "}
+            <input
+              placeholder="(e.g., first, second, last) day "
+              type="text"
+              value={rentDay}
+              onChange={handleLeaseTermData}
+            ></input>
           </p>
           <label>Each Month</label>
-          <input></input>
-          <label htmlFor="">Other</label>
-          <input></input>
+          <input
+            type="radio"
+            name="rentType"
+            value="month"
+            checked={rentType === "month"}
+            onChange={handleLeaseTermData}
+          ></input>
+          <label>Other(e.g., weekly)</label>
+          <input
+            type="radio"
+            name="rentType"
+            value="other"
+            checked={rentType === "other"}
+            onChange={handleLeaseTermData}
+          ></input>
+          {rentType === "other" && (
+            <input
+              type="text"
+              value={otherRentDetails}
+              name="otherRentDetails"
+              onChange={handleLeaseTermData}
+            ></input>
+          )}
         </div>
+
         <div>
           {" "}
           <p>The tenant will pay the following rent:</p>
           <label>Base rent for the rental unit</label>
-          <input></input>
+          <input
+            value={baseRent}
+            name="baseRent"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
           <label>parking (if applicable)</label>
-          <input></input>
+          <input
+            value={parkingRent}
+            name="parkingRent"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
           <label>Other services and utilities (specify if applicable):</label>
-          <input></input>
+          <input
+            value={otherUtil1}
+            name="otherUtil1"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
+          <input
+            value={otherUtil2}
+            name="otherUtil2"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
+          <input
+            value={otherUtil3}
+            name="otherUtil3"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
           <label>Total Rent (Lawful Rent)</label>
-          <input></input>
+          <input
+            value={totalRent}
+            name="totalRent"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
           <label>Rent is payable to:</label>
-          <input></input>
+          <input
+            value={payTo}
+            name="payTo"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
           <label>Rent will be paid using the following methods:</label>
-          <input></input>
+          <input
+            value={payMethod}
+            name="payMethod"
+            type="text"
+            onChange={handleLeaseTermData}
+          ></input>
         </div>
         <div>
           <p>Is the first rental period a partial period?</p>
           <label>yes</label>
-          <input></input>
+          <input
+            value="yes"
+            name="partPeriod"
+            type="radio"
+            onChange={handleLeaseTermData}
+            checked={partPeriod === "yes"}
+          ></input>
           <label>no</label>
-          <input></input>
-          {yes && (
+          <input
+            value="no"
+            name="partPeriod"
+            type="radio"
+            onChange={handleLeaseTermData}
+            checked={partPeriod === "no"}
+          ></input>
+          {partPeriod === "yes" && (
             <div>
               <label>the tenant will pay a partial rent of $</label>
-              <input></input>
+              <input
+                value={partRent}
+                name="partRent"
+                type="text"
+                onChange={handleLeaseTermData}
+              ></input>
               <label>on</label>
-              <input></input>
+              <input
+                type="date"
+                value={partDate}
+                name="partDate "
+                onChange={handleLeaseTermData}
+              ></input>
               <label>
                 This partial rent covers the rental of the unit from{" "}
               </label>
-              <input type="date"></input>
+              <input
+                type="date"
+                value={coverDateFrom}
+                name="coverDateFrom"
+                onChange={handleLeaseTermData}
+              ></input>
+
               <span>to</span>
-              <input type="date"></input>
+              <input
+                onChange={handleLeaseTermData}
+                type="date"
+                value={coverDateTo}
+                name="coverDateTo"
+              ></input>
             </div>
           )}
           <label>
@@ -144,7 +266,12 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
             (NSF), the tenant will have to pay the landlord’s administration
             charge of $
           </label>
-          <input></input>
+          <input
+            type="text"
+            value={nsfCharge}
+            name="nsfCharge"
+            onChange={handleLeaseTermData}
+          ></input>
           <span> plus any NSF charges made by the landlord's bank.</span>
         </div>
       </form>
