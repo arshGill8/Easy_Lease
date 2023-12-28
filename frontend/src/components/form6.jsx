@@ -1,166 +1,255 @@
-export default function Form4({ depositData, handleDepositData }) {
+export default function Form6({ depositData, handleDepositData }) {
   const {
-    reqDepositY,
-    reqDepositN,
+    rentDeposit,
     rentDiscount,
     rentDiscountDesc,
-
-    depAmount,
-
+    depositAmount,
     keyDeposit,
-
     keyDepAmount,
     keyDepositDesc,
-    smokingN,
-    smokingY,
+    smoking,
     smokingRules,
-    tenInsuranceN,
-    tenInsuranceY,
+    tenantInsurance,
 
-    addTermY,
-    addTermN,
-  } = utilityData;
+    addTerm,
+  } = depositData;
 
   return (
     <div className="w-full">
-      <form className="my-8">
-        <h1 className="py-4 text-xl flex justify-center ">Rent Discounts</h1>
-        <div>
-          <h3>Select one:</h3>
-          <label>There is no rent discount</label>
-          <input
-            name="rentDiscount"
-            type="radio"
-            value="no"
-            checked={rentDiscount === "no"}
-            onChange={handleUtilityData}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
+      <form className="my-4">
+        <h1 className="py-4 text-lg text-center ">Rent Discount?</h1>
+        <div className="flex justify-center gap-20 ">
+          <div className="flex flex-col gap-2 ">
+            <label className>Yes</label>
+            {/* <label>The lawful rent will be discounted as follows: </label> */}
+            <input
+              name="rentDiscount"
+              type="radio"
+              value="yes"
+              checked={rentDiscount === "yes"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
 
-          <label>The lawful rent will be discounted as follows: </label>
-          <input
-            name="rentDiscount"
-            type="radio"
-            value="yes"
-            checked={rentDiscount === "yes"}
-            onChange={handleUtilityData}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
-          <label>
-            Provide description of rent discount (if necessary add additional
-            pages):
-          </label>
-          <input type="text" value={rentDiscountDesc} name="rentDiscountDesc" />
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="rentDiscount"
+              type="radio"
+              value="no"
+              checked={rentDiscount === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
         </div>
-
-        <h1 className="py-4 text-xl flex justify-center ">Rent Deposit</h1>
-        <div>
-          <h3>Select one:</h3>
-          <label>A rent deposit is not required.</label>
-          <input
-            name="keyDeposit"
-            type="radio"
-            value="no"
-            checked={rentDeposit === "no"}
-            onChange={handleUtilityData}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
-          <div>
+        {rentDiscount === "yes" && (
+          <div className="flex text-center flex-col mt-5 px-2">
+            <label className="block ">
+              Provide description of rent discount:
+            </label>
+            <input
+              type="text"
+              value={rentDiscountDesc}
+              onChange={handleDepositData}
+              name="rentDiscountDesc"
+              className="w-full mt-2 block border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+            />
+          </div>
+        )}
+        <h1 className="py-4 text-lg text-center "> Rent Deposit?</h1>
+        <div className="flex  justify-center gap-20 ">
+          <div className="flex flex-col gap-2">
+            <label>Yes</label>
             <input
               name="rentDeposit"
               type="radio"
               value="yes"
               checked={rentDeposit === "yes"}
-              onChange={handleUtilityData}
+              onChange={handleDepositData}
               className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
             />
-            <p>
-              The tenant will pay a rent deposit of $
-              <input value={depAmount} type="text" name="depAmount" /> This can
-              only be applied to the rent for the last rental period of the
-              tenancy.
-            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="rentDeposit"
+              type="radio"
+              value="no"
+              checked={rentDeposit === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
           </div>
         </div>
+        {rentDeposit === "yes" && (
+          <>
+            <h2 className=" flex justify-center mt-5">Rent deposit amount</h2>
+            <input
+              value={depositAmount}
+              onChange={handleDepositData}
+              type="text"
+              name="depositAmount"
+              className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+              placeholder="$1000"
+            />
+            <p className="mt-1 text-sm text-center">
+              {" "}
+              *This can only be applied to the rent for the last rental period
+              of the tenancy.
+            </p>
+          </>
+        )}
+        <h1 className="py-4 text-lg text-center">Key Deposit?</h1>
+        <div className="flex  justify-center gap-20 ">
+          <div className="flex flex-col gap-2">
+            <label>Yes</label>
 
-        <h1>Key Deposit</h1>
-        <div>
-          <h3>Select one:</h3>
-          <label>A key deposit is not required.</label>
-          <input
-            name="keyDeposit"
-            type="radio"
-            value="no"
-            checked={keyDeposit === "no"}
-            onChange={handleUtilityData}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-          />
-
-          <div>
             <input
               name="keyDeposit"
               type="radio"
               value="yes"
               checked={keyDeposit === "yes"}
-              onChange={handleUtilityData}
+              onChange={handleDepositData}
               className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
             />
-            <p>
-              The tenant will pay a refundable key deposit of $
-              <input
-                value={keyDepositAmount}
-                type="text"
-                name="keyDepAmount"
-              />{" "}
-              to cover the cost of replacing the keys, remote entry devices or
-              cards if they are not returned to the landlord at the end of the
-              tenancy.
-            </p>
           </div>
-          <p>
-            If a refundable key deposit is required, provide description and
-            number of keys, access cards and remote entry devices:
-          </p>
-          <input
-            value={keyDepositDesc}
-            type="text"
-            onChange={handleDepositData}
-          ></input>
-
-          <h1>Smoking</h1>
-          <p>
-            Under provincial law, smoking is not allowed in any indoor common
-            areas of the building. The tenant agrees to these additional rules
-            on smoking:{" "}
-          </p>
-          <p>Select one:</p>
-          <label>None</label>
-          <input></input>
-          <span>or</span>
-          <label>Smoking rules</label>
-          <input></input>
-          <h1>Tenant's Insurance</h1>
-          <p>Select one:</p>
-          <label>No Tenant Insurance Requirements</label>
-          <input></input>
-          <span>or</span>
-          <label>
-            The tenant must have liability insurance at all times. If the
-            landlord asks for proof of coverage, the tenant must provide it. It
-            is up to the tenant to get contents insurance if they want it.{" "}
-          </label>
-          <input></input>
-          <h1>Additional Terms</h1>
-          <p>Select one:</p>
-          <label>No Additional Terms</label>
-          <input></input>
-          <span>or</span>
-          <label>
-            This tenancy agreement includes an attachment with additional terms
-            that the landlord and tenant agreed to.
-          </label>
-          <input></input>
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="keyDeposit"
+              type="radio"
+              value="no"
+              checked={keyDeposit === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
         </div>
+        {keyDeposit === "yes" && (
+          <>
+            {" "}
+            <h2 className=" flex justify-center mt-5">
+              Refundable key deposit amount
+            </h2>
+            <input
+              value={keyDepAmount}
+              onChange={handleDepositData}
+              type="text"
+              name="keyDepAmount"
+              className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+              placeholder="$75"
+            />
+            <h2 className=" flex justify-center mt-4">Provide description</h2>
+            <input
+              value={keyDepositDesc}
+              type="text"
+              onChange={handleDepositData}
+              className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+              placeholder="ex. number of keys, access cards and remote
+              entry devices"
+              name="keyDepositDesc"
+            ></input>
+          </>
+        )}
+        <h1 className="py-4 text-lg text-center  ">Smoking Allowed?</h1>
+        <div className="flex   justify-center gap-20 ">
+          <div className="flex flex-col gap-2">
+            <label>Yes</label>
+            <input
+              name="smoking"
+              type="radio"
+              value="yes"
+              checked={smoking === "yes"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="smoking"
+              type="radio"
+              value="no"
+              checked={smoking === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+        </div>
+        {smoking === "yes" && (
+          <div>
+            <h2 className=" flex justify-center mt-5">
+              Provide description of smoking rules{" "}
+            </h2>
+            <input
+              name="smokingRules"
+              value={smokingRules}
+              onChange={handleDepositData}
+              className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+            ></input>
+          </div>
+        )}
+        <h1 className="py-4 text-lg text-center ">
+          Tenant's Insurance Required?
+        </h1>
+        <div className="flex  justify-center gap-20">
+          <div className="flex flex-col gap-2">
+            <label>Yes </label>
+            <input
+              name="tenantInsurance"
+              type="radio"
+              value="yes"
+              checked={tenantInsurance === "yes"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="tenantInsurance"
+              type="radio"
+              value="no"
+              checked={tenantInsurance === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+        </div>{" "}
+        <h1 className="py-4 text-lg text-center "> Additional Terms?</h1>
+        <div className="flex  justify-center gap-20 ">
+          <div className="flex flex-col gap-2">
+            <label>Yes</label>
+            <input
+              name="addTerm"
+              type="radio"
+              value="yes"
+              checked={addTerm === "yes"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label>No</label>
+            <input
+              name="addTerm"
+              type="radio"
+              value="no"
+              checked={addTerm === "no"}
+              onChange={handleDepositData}
+              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            />
+          </div>
+        </div>
+        {addTerm === "yes" && (
+          <p className="my-2 text-sm text-center">
+            *This tenancy agreement includes an attachment with additional terms
+            that the landlord and tenant agreed to.
+          </p>
+        )}
       </form>
     </div>
   );

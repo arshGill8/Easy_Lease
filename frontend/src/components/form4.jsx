@@ -13,9 +13,9 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
     baseRent,
 
     parkingRent,
-    otherUtil1,
-    otherUtil2,
-    otherUtil3,
+    // otherUtil1,
+    // otherUtil2,
+    // otherUtil3,
     totalRent,
     payTo,
     payMethod,
@@ -30,12 +30,10 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
   return (
     <div className="w-full">
       <form className="my-8">
-        <h1 className="py-4 text-xl flex justify-center ">
-          Term of Tenancy Agreement
-        </h1>
+        <h1 className="mb-8 text-center ">Term of Tenancy Agreement</h1>
 
-        <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
+        <div className="flex flex-col md:flex-row md:justify-evenly  md:items-baseline  mb-6 ">
+          <label className="md:text-2xl text-lg text-gray-900 mb-2">
             This tenancy starts on:{" "}
           </label>
           <input
@@ -43,52 +41,58 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
             type="date"
             onChange={handleLeaseTermData}
             value={startDate}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="md:text-xl md:w-1/2 inline border border-gray-300 text-gray-900 rounded-lg p-3 focus:shadow-md"
           />
         </div>
 
-        <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
+        <div className="border rounded py-4 px-2.5">
+          <label className="block mb-5 text-lg text-center text-gray-900">
             This tenancy agreement is for: (select an option below and fill in
             details as needed)
           </label>
-
           <div>
-            <label>a fixed length of time </label>
-            <input
-              name="tenancyType"
-              type="radio"
-              value="fixed"
-              checked={tenancyType === "fixed"}
-              onChange={handleLeaseTermData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+            <div className="flex mb-5 justify-between mx-1">
+              <label className="">Fixed Length</label>
+              <input
+                name="tenancyType"
+                type="radio"
+                value="fixed"
+                checked={tenancyType === "fixed"}
+                onChange={handleLeaseTermData}
+                className=""
+              />
+            </div>
+
             {tenancyType === "fixed" && (
-              <>
-                <label>ending on:</label>
+              <div className="mb-5">
+                <label className=" mx-1">Ending on:</label>
                 <input
                   name="fixedTenDate"
                   type="date"
                   onChange={handleLeaseTermData}
                   value={fixedTenDate}
-                  className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                  className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
                 />
-              </>
+              </div>
             )}
-          </div>
-          <div>
-            <label className="">Monthly Tenancy</label>
-            <input
-              name="tenancyType"
-              type="radio"
-              value="monthly"
-              checked={tenancyType === "monthly"}
-              onChange={handleLeaseTermData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-            <div>
+
+            <div className="flex mb-5 justify-between mx-1">
+              <label className="">Monthly Tenancy</label>
+
+              <input
+                name="tenancyType"
+                type="radio"
+                value="monthly"
+                checked={tenancyType === "monthly"}
+                onChange={handleLeaseTermData}
+                className=" "
+              />
+            </div>
+
+            <div className="mx-1 flex justify-between">
               <label className="">
-                Other (such as daily, weekly, please specify):
+                Other (such as daily,
+                <br /> weekly, please specify):
               </label>
 
               <input
@@ -97,182 +101,230 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
                 value="other"
                 checked={tenancyType === "other"}
                 onChange={handleLeaseTermData}
-                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
               />
+            </div>
 
+            <div className="">
               {tenancyType === "other" && (
                 <input
                   type="text"
+                  name="otherTenDetails"
+                  placeholder="Weekly"
                   value={otherTenDetails}
-                  onChange={handleLeaseTermData}
-                  className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                  onChange={(e) => handleLeaseTermData(e)}
+                  className=" mt-6  w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
                 ></input>
               )}
             </div>
           </div>
         </div>
+        <h1 className="text-center my-6">Rent</h1>
 
-        <h1>Rent</h1>
-        <div>
-          {" "}
-          <p>
-            Rent is to be paid on the{" "}
+        <div className="border px-2.5 py-4 ">
+          <div className=" text-center mb-3">
+            <p className="text-lg mb-2 w-full">Rent is to be paid on the:</p>
             <input
               placeholder="(e.g., first, second, last) day "
               type="text"
               value={rentDay}
+              name="rentDay"
+              onChange={(e) => handleLeaseTermData(e)}
+              className="border w-full  mb-2 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div>
+
+          <div className="flex justify-between mx-1 mb-5">
+            <label className="">Each Month</label>
+            <input
+              type="radio"
+              name="rentType"
+              value="month"
+              checked={rentType === "month"}
               onChange={handleLeaseTermData}
             ></input>
-          </p>
-          <label>Each Month</label>
-          <input
-            type="radio"
-            name="rentType"
-            value="month"
-            checked={rentType === "month"}
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>Other(e.g., weekly)</label>
-          <input
-            type="radio"
-            name="rentType"
-            value="other"
-            checked={rentType === "other"}
-            onChange={handleLeaseTermData}
-          ></input>
+          </div>
+          <div className="flex justify-between mx-1 ">
+            <label className="">Other (e.g., Weekly)</label>
+            <input
+              type="radio"
+              name="rentType"
+              value="other"
+              checked={rentType === "other"}
+              onChange={handleLeaseTermData}
+            ></input>
+          </div>
+
           {rentType === "other" && (
             <input
               type="text"
               value={otherRentDetails}
+              placeholder="Weekly"
               name="otherRentDetails"
-              onChange={handleLeaseTermData}
+              onChange={(e) => handleLeaseTermData(e)}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
             ></input>
           )}
         </div>
 
-        <div>
+        <div className="border rounded my-8 py-4 px-2.5">
           {" "}
-          <p>The tenant will pay the following rent:</p>
-          <label>Base rent for the rental unit</label>
-          <input
-            value={baseRent}
-            name="baseRent"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>parking (if applicable)</label>
-          <input
-            value={parkingRent}
-            name="parkingRent"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>Other services and utilities (specify if applicable):</label>
-          <input
-            value={otherUtil1}
-            name="otherUtil1"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <input
-            value={otherUtil2}
-            name="otherUtil2"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <input
-            value={otherUtil3}
-            name="otherUtil3"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>Total Rent (Lawful Rent)</label>
-          <input
-            value={totalRent}
-            name="totalRent"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>Rent is payable to:</label>
-          <input
-            value={payTo}
-            name="payTo"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
-          <label>Rent will be paid using the following methods:</label>
-          <input
-            value={payMethod}
-            name="payMethod"
-            type="text"
-            onChange={handleLeaseTermData}
-          ></input>
+          <p className="text-center text-lg  mb-5">
+            The tenant will pay the following rent:
+          </p>
+          <div className="mb-5">
+            <label className="mx-1">Base rent for the rental unit</label>
+            <input
+              value={baseRent}
+              name="baseRent"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              placeholder="$1800"
+            ></input>
+          </div>
+          <div className="mb-5">
+            <label className=" mx-1">Parking (if applicable)</label>
+            <input
+              value={parkingRent}
+              name="parkingRent"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div>
+          {/* <div className="mb-5">
+            <label className="mx-0">
+              Other services and utilities (specify if applicable):
+            </label>
+            <input
+              value={otherUtil1}
+              name="otherUtil1"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div> */}
+          <div className="mb-5">
+            <label className="">Total Rent (Lawful Rent)</label>
+            <input
+              value={totalRent}
+              name="totalRent"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div>
+          <div className="mb-5">
+            {" "}
+            <label className="">Rent is payable to:</label>
+            <input
+              value={payTo}
+              name="payTo"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div>
+          <div className="">
+            {" "}
+            <label className="">
+              Rent will be paid using the following methods:
+            </label>
+            <input
+              value={payMethod}
+              name="payMethod"
+              type="text"
+              onChange={handleLeaseTermData}
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            ></input>
+          </div>
         </div>
-        <div>
-          <p>Is the first rental period a partial period?</p>
-          <label>yes</label>
-          <input
-            value="yes"
-            name="partPeriod"
-            type="radio"
-            onChange={handleLeaseTermData}
-            checked={partPeriod === "yes"}
-          ></input>
-          <label>no</label>
-          <input
-            value="no"
-            name="partPeriod"
-            type="radio"
-            onChange={handleLeaseTermData}
-            checked={partPeriod === "no"}
-          ></input>
-          {partPeriod === "yes" && (
-            <div>
-              <label>the tenant will pay a partial rent of $</label>
-              <input
-                value={partRent}
-                name="partRent"
-                type="text"
-                onChange={handleLeaseTermData}
-              ></input>
-              <label>on</label>
-              <input
-                type="date"
-                value={partDate}
-                name="partDate "
-                onChange={handleLeaseTermData}
-              ></input>
-              <label>
-                This partial rent covers the rental of the unit from{" "}
-              </label>
-              <input
-                type="date"
-                value={coverDateFrom}
-                name="coverDateFrom"
-                onChange={handleLeaseTermData}
-              ></input>
 
-              <span>to</span>
-              <input
-                onChange={handleLeaseTermData}
-                type="date"
-                value={coverDateTo}
-                name="coverDateTo"
-              ></input>
+        <div>
+          <div className="border px-2.5 py-4 my-8">
+            <p className="text-center text-lg mb-3">
+              Is the first rental period a partial period?
+            </p>
+
+            <div className="flex gap-6 justify-center">
+              <div className="flex gap-2">
+                <label>Yes</label>
+                <input
+                  value="yes"
+                  name="partPeriod"
+                  type="radio"
+                  onChange={handleLeaseTermData}
+                  checked={partPeriod === "yes"}
+                ></input>
+              </div>
+
+              <div className="flex gap-2">
+                <label>No</label>
+                <input
+                  value="no"
+                  name="partPeriod"
+                  type="radio"
+                  onChange={handleLeaseTermData}
+                  checked={partPeriod === "no"}
+                ></input>
+              </div>
             </div>
-          )}
-          <label>
+            {partPeriod === "yes" && (
+              <div className="text-center mt-5">
+                <label className="">Tenant will pay a partial rent of:</label>
+                <input
+                  value={partRent}
+                  placeholder="$500"
+                  name="partRent"
+                  type="text"
+                  onChange={handleLeaseTermData}
+                  className="border w-full my-3 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                ></input>
+                <label>On</label>
+                <input
+                  type="date"
+                  value={partDate}
+                  name="partDate"
+                  onChange={handleLeaseTermData}
+                  className="border w-full my-3  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                ></input>
+                <label className="mx-1">
+                  This partial rent covers the rental of the unit from:{" "}
+                </label>
+                <input
+                  type="date"
+                  value={coverDateFrom}
+                  name="coverDateFrom"
+                  onChange={handleLeaseTermData}
+                  className="border w-full my-3 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                ></input>
+
+                <span className="">To</span>
+                <input
+                  onChange={handleLeaseTermData}
+                  type="date"
+                  value={coverDateTo}
+                  name="coverDateTo"
+                  className="border w-full mt-3  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                ></input>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col border rounded px-2.5 py-4 ">
+          <label className="">
             If the tenant’s cheque is returned because of non-sufficient funds
             (NSF), the tenant will have to pay the landlord’s administration
-            charge of $
+            charge of
           </label>
           <input
             type="text"
             value={nsfCharge}
             name="nsfCharge"
             onChange={handleLeaseTermData}
+            className="border w-full my-3  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           ></input>
-          <span> plus any NSF charges made by the landlord's bank.</span>
+          <span> Plus any NSF charges made by the landlord's bank.</span>
         </div>
       </form>
     </div>

@@ -14,110 +14,97 @@ export default function Form2({ rentalData, handleRentalData }) {
   return (
     <div className="w-full">
       <form className="my-8">
-        <h1 className="py-4 text-xl flex justify-center ">Rental Unit Info</h1>
+        <h1 className=" mb-5 flex justify-center ">Rental Unit Info</h1>
+        <p className="mb-5 text-lg">
+          The landlord will rent to the tenant the rental unit at
+        </p>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            Unit
-          </label>
           <input
-            placeholder="e.g., unit 1 or basement unit"
+            placeholder=" Unit (e.g., unit 1 or basement unit)"
             name="unit"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={unit}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            Street Number
-          </label>
           <input
-            placeholder="e.g., unit 1 or basement unit"
+            placeholder=" Street Number"
             name="streetNumber"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={streetNumber}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            Street Name
-          </label>
           <input
-            placeholder="e.g., unit 1 or basement unit"
+            placeholder="Street Name"
             name="streetName"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={streetName}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            City/Town
-          </label>
           <input
-            placeholder="e.g., unit 1 or basement unit"
+            placeholder="Toronto"
             name="city"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={city}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            Postal Code
-          </label>
           <input
-            placeholder="e.g., unit 1 or basement unit"
+            placeholder="Postal Code"
             name="postalCode"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={postalCode}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="mb-4 w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
-          <label className="block my-3 text-md font-medium text-gray-900">
-            Number of vehicle parking spaces and description{" "}
-          </label>
           <input
-            placeholder=" e.g., indoor/outdoor, location"
+            placeholder="Number of vehicle parking spaces and description (e.g., indoor/outdoor, location)"
             name="parkingSpace"
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={parkingSpace}
-            className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full mb-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
-        <div className="flex items-center">
-          <p className="block my-3 text-md font-medium text-gray-900 w-3/4">
-            The rental unit is a unit in a condominium.
-          </p>
-          <div className="flex gap-6 w-1/4">
-            <div className="">
+
+        <div className=" flex flex-col gap-2.5 items-center rounded border p-3 md:pr-9 border-gray-300">
+          <label className=" text-black text-md  w-3/4 text-center ">
+            The rental unit is in a condominium?
+          </label>
+          <div className="flex gap-6 w-1/4 justify-center">
+            <div className="flex gap-2">
               <label>Yes</label>
               <input
                 name="inCondo"
                 type="radio"
-                value="true"
+                value="yes"
                 onChange={handleRentalData}
-                checked={inCondo === "true"}
-                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                checked={inCondo === "yes"}
+                className="w-full"
               />
             </div>
-            <div className="">
+
+            <div className="flex gap-2 ">
               <label className="">No</label>
               <input
                 name="inCondo"
                 type="radio"
-                value="false"
-                checked={inCondo === "false"}
+                value="no"
+                checked={inCondo === "no"}
                 onChange={handleRentalData}
-                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                className="w-full "
               />
             </div>
           </div>

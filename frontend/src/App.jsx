@@ -11,10 +11,13 @@ import bg from "/office_bg.jpg";
 
 export default function App() {
   const [page, setPage] = useState(1);
+
   const [landlordList, setLandlordList] = useState([{ landlord: "" }]);
+
   const [tenantList, setTenantList] = useState([
     { tenantFirstName: "", tenantLastName: "" },
   ]);
+
   const [rentalData, setRentalData] = useState({
     unit: "",
     streetNumber: "",
@@ -43,14 +46,13 @@ export default function App() {
     startDate: "",
     tenancyType: "",
     fixedTenDate: "",
-    monthTen: "",
-    otherTen: "",
+
     otherTenDetails: "",
 
     rentDay: "",
     rentType: "",
-    monthly: "",
-    other: "",
+
+    otherRentDetails: "",
     baseRent: "",
 
     parkingRent: "",
@@ -60,81 +62,110 @@ export default function App() {
     totalRent: "",
     payTo: "",
     payMethod: "",
+    partPeriod: "",
     partRent: "",
     partDate: "",
     coverDateFrom: "",
     coverDateTo: "",
     nsfCharge: "",
   });
+
   const [utilityData, setUtility] = useState({
-    gasN: "",
-    gasY: "",
-    acN: "",
-    acY: "",
-    addStoreN: "",
-    addStoreY: "",
-    laundryN: "",
-    laundryY: "",
-    guestParkN: "",
-    guestParkY: "",
-    elecLandlord: "",
-    elecTenant: "",
-    heatLandlord: "",
-    heatTenant: "",
-    waterLandlord: "",
-    waterTenants: "",
+    gas: "",
+
+    ac: "",
+
+    addStore: "",
+
+    laundry: "",
+
+    guestPark: "",
+    otherUtil1: "",
+    otherUtilText1: "",
+    electricity: "",
+
+    heat: "",
+    water: "",
+    tenantUtilDetails: "",
   });
+
   const [depositData, setDepositData] = useState({
-    reqDepositY: "",
-    reqDepositN: "",
-    rentDiscN: "",
-    rentDiscY: "",
-    amountDep: "",
-
-    // page 5
-    keyDepY: "",
-    keyDepN: "",
+    rentDeposit: "",
+    rentDiscount: "",
+    rentDiscountDesc: "",
+    depositAmount: "",
+    keyDeposit: "",
     keyDepAmount: "",
-    smokingN: "",
-    smokingY: "",
+    keyDepositDesc: "",
+    smoking: "",
     smokingRules: "",
-    tenInsuranceN: "",
-    tenInsuranceY: "",
+    tenantInsurance: "",
 
-    // page 6
-    addTermY: "",
-    addTermN: "",
-  });
-  const [signData, setSignData] = useState({
-    signLaName1: "",
-    signLaName2: "",
-    signLaName3: "",
-    signLaName4: "",
-    signLa1: "",
-    signLa2: "",
-    signLa3: "",
-    signLa4: "",
-    signLaDate1: "",
-    signLaDate2: "",
-    signLaDate3: "",
-    signLaDate4: "",
-    signTenName1: "",
-    signTenName2: "",
-    signTenName3: "",
-    signTenName4: "",
-    signTenName5: "",
-    signTenName6: "",
-    signTen1: "",
-    signTen2: "",
-    signTen3: "",
-    signTen4: "",
-    signTenDate1: "",
-    signTenDate2: "",
-    signTenDate3: "",
-    signTenDate4: "",
+    addTerm: "",
   });
 
-  // landlord functions
+  const [landlordSignList, setLandlordSignList] = useState([
+    { landlordName: "", landlordSign: "", landlordSignDate: "" },
+  ]);
+
+  const [tenantSignList, setTenantSignList] = useState([
+    { tenantName: "", tenantSign: "", tenantSignDate: "" },
+  ]);
+
+  const handleLandlordSignChange = (value, index, property) => {
+    console.log({ [property]: value });
+    setLandlordSignList((prevLandlordSignList) =>
+      prevLandlordSignList.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              [property]: value,
+            }
+          : item
+      )
+    );
+  };
+
+  const handleLandlordSignAdd = () => {
+    setLandlordSignList([
+      ...landlordSignList,
+      { landlordName: "", landlordSign: "", landlordSignDate: "" },
+    ]);
+  };
+  const handleLandlordSignRemove = (index) => {
+    const list = [...landlordSignList];
+    list.splice(index, 1);
+    setLandlordSignList(list);
+  };
+  //tenant signatures
+  const handleTenantSignChange = (value, index, property) => {
+    console.log({ [property]: value });
+    setTenantSignList((prevTenantSignList) =>
+      prevTenantSignList.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              [property]: value,
+            }
+          : item
+      )
+    );
+  };
+  const handleTenantSignAdd = () => {
+    console.log(tenantSignList);
+    setTenantSignList([
+      ...tenantSignList,
+      { tenantName: "", tenantSign: "", tenantSignDate: "" },
+    ]);
+  };
+  const handleTenantSignRemove = (i) => {
+    console.log(i);
+    const list = [...tenantSignList];
+    list.splice(i, 1);
+    setTenantSignList(list);
+  };
+
+  // landlord names
   const handleLandlordChange = (e, index) => {
     setLandlordList((prevLandlordList) =>
       prevLandlordList.map((item, i) =>
@@ -154,7 +185,7 @@ export default function App() {
     setLandlordList(list);
   };
 
-  // tenant functions
+  // tenant names
   const handleTenantChange = (e, index) => {
     setTenantList((prevTenantList) =>
       prevTenantList.map((item, i) =>
@@ -174,11 +205,22 @@ export default function App() {
   };
 
   const handleContactData = (e) => {
-    console.log(e.target.value);
     setContactData((prevContactData) => ({
       ...prevContactData,
       [e.target.name]: e.target.value,
     }));
+    e.target.name === "emCont" && e.target.value === "No"
+      ? setContactData((prevContactData) => ({
+          ...prevContactData,
+          emContInfo: "",
+        }))
+      : "";
+    e.target.name === "emailNotice" && e.target.value === "No"
+      ? setContactData((prevContactData) => ({
+          ...prevContactData,
+          email: "",
+        }))
+      : "";
   };
 
   const handleRentalData = (e) => {
@@ -188,7 +230,6 @@ export default function App() {
     }));
   };
   const handleLeaseTermData = (e) => {
-    console.log(e.target.value);
     setLeaseTermData((prevLeaseTermData) => ({
       ...prevLeaseTermData,
       [e.target.name]: e.target.value,
@@ -209,20 +250,23 @@ export default function App() {
     }));
   };
 
-  const handleSignData = (e, index) => {
-    setSignData((prevSignData) =>
-      prevSignData.map((item, i) =>
-        i === index ? { ...item, [e.target.name]: e.target.value } : item
-      )
-    );
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = [...landlordList, ...tenantList];
+    const data = {
+      landlordList,
+      tenantList,
+      landlordSignList,
+      tenantSignList,
+      ...rentalData,
+      ...contactData,
+      ...leaseTermData,
+      ...utilityData,
+      ...depositData,
+    };
+
     axios
       .post("http://localhost:3001/createForm", data)
-      .then(() => console.log("data sent"))
+      .then(() => console.log("data sent", data))
       .catch((err) => {
         console.log(err);
       });
@@ -267,7 +311,18 @@ export default function App() {
     6: (
       <Form6 depositData={depositData} handleDepositData={handleDepositData} />
     ),
-    7: <Form7 signData={signData} handleSignData={handleSignData} />,
+    7: (
+      <Form7
+        handleLandlordSignAdd={handleLandlordSignAdd}
+        handleLandlordSignRemove={handleLandlordSignRemove}
+        handleLandlordSignChange={handleLandlordSignChange}
+        landlordSignList={landlordSignList}
+        handleTenantSignAdd={handleTenantSignAdd}
+        handleTenantSignRemove={handleTenantSignRemove}
+        handleTenantSignChange={handleTenantSignChange}
+        tenantSignList={tenantSignList}
+      />
+    ),
   };
 
   const formToRender = formComponents[page] || <Form1 />;
@@ -285,7 +340,7 @@ export default function App() {
     }
     return (
       <button
-        className=" font-bold	text-md text-white bg-green-500 w-full mt-4 p-2 py-3 rounded hover:bg-green-600 shadow-md"
+        className=" font-bold	text-md text-white bg-green-500 w-1/2 p-3 rounded hover:bg-green-600 shadow-md"
         onClick={handleNext}
       >
         Next
@@ -307,7 +362,7 @@ export default function App() {
         <div className="w-full flex justify-center gap-3">
           {page > 1 && (
             <button
-              className=" font-bold w-full mt-4bg-gray-300 hover:bg-gray-400 p-2 py-3 rounded hover: shadow-md"
+              className=" font-bold w-1/2  bg-gray-200 hover:bg-gray-400  p-3 rounded hover: shadow-md"
               onClick={handleBack}
             >
               Go Back
@@ -315,7 +370,7 @@ export default function App() {
           )}
           {formButton()}
         </div>
-        <h2>{page}/7</h2>
+        <h2 className="p-3 rounded-full border-2 my-5 mb-4 ">{page}/7</h2>
       </div>
     </div>
   );

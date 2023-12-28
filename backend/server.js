@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, PDFFont } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
+import { isStringObject } from "util/types";
 
 const port = 3001;
 
@@ -17,29 +18,17 @@ app.use(
 
 app.post("/createForm", (req, res) => {
   const {
-    llName1,
-    llName2,
-    llName3,
-    llName4,
-    llName5,
-    tLname1,
-    tLname2,
-    tLname3,
-    tLname4,
-    tLname5,
-    tFname1,
-    tFname2,
-    tFname3,
-    tFname4,
-    tFname5,
-    unitNumber,
-    streetNum,
+    landlordList,
+    tenantList,
+    landlordSignList,
+    tenantSignList,
+    unit,
+    streetNumber,
     streetName,
     city,
-    posCode,
-    parking,
-    inCondoN,
-    inCondoY,
+    postalCode,
+    parkingSpace,
+    inCondo,
     contUnit,
     contStreetNum,
     contStreetName,
@@ -47,20 +36,17 @@ app.post("/createForm", (req, res) => {
     contCity,
     contProv,
     contPost,
-    emailNoticeY,
-    emailNoticeN,
+    emailNotice,
     email,
     emCont,
-    emCont_Y,
-    emCont_N,
+    emContInfo,
     startDate,
-    fixedTen,
+    tenancyType,
     fixedTenDate,
-    monthTen,
-    otherTen,
+    otherTenDetails,
     rentDay,
-    monthly,
-    weekly,
+    rentType,
+    otherRentDetails,
     baseRent,
     parkingRent,
     otherUtil1,
@@ -69,73 +55,36 @@ app.post("/createForm", (req, res) => {
     totalRent,
     payTo,
     payMethod,
+    partPeriod,
     partRent,
     partDate,
     coverDateFrom,
     coverDateTo,
     nsfCharge,
-    gasN,
-    gasY,
-    acN,
-    acY,
-    addStoreN,
-    addStoreY,
-
-    laundryN,
-    laundryY,
-    guestParkN,
-    guestParkY,
-
-    elecLandlord,
-    elecTenant,
-    heatLandlord,
-    heatTenant,
-    waterLandlord,
-    waterTenants,
-    reqDepositY,
-    reqDepositN,
-    rentDiscN,
-    rentDiscY,
-    amountDep,
-
-    keyDepY,
-    keyDepN,
+    gas,
+    ac,
+    addStore,
+    laundry,
+    guestPark,
+    otherUtilText1,
+    electricity,
+    heat,
+    water,
+    tenantUtilDetails,
+    rentDeposit,
+    rentDiscount,
+    rentDiscountDesc,
+    depositAmount,
+    keyDeposit,
     keyDepAmount,
-    smokingN,
-    smokingY,
-
+    keyDepositDesc,
+    smoking,
     smokingRules,
-    tenInsuranceN,
-    tenInsuranceY,
-    addTermY,
-    addTermN,
-    signLaName1,
-    signLaName2,
-    signLaName3,
-    signLaName4,
-    signLa1,
-    signLa2,
-    signLa3,
-    signLa4,
-    signLaDate1,
-    signLaDate2,
-    signLaDate3,
-    signLaDate4,
-    signTenName1,
-    signTenName2,
-    signTenName3,
-    signTenName4,
-    signTenName5,
-    signTenName6,
-    signTen1,
-    signTen2,
-    signTen3,
-    signTen4,
-    signTenDate1,
-    signTenDate2,
-    signTenDate3,
-    signTenDate4,
+    tenantInsurance,
+    addTerm,
   } = req.body;
+
+  console.log(landlordList[0].landlord);
 
   async function fillForm(input, output) {
     try {
@@ -164,31 +113,33 @@ app.post("/createForm", (req, res) => {
       const txtp_street = form.getField("txtp_street");
 
       // page 1 SET
-      txtseller1.setText(llName1);
-      txtseller2.setText(llName2);
-      txtseller3.setText(llName3);
-      txtseller4.setText(llName4);
-      txtLandlord5.setText(llName5);
-      txtbuyer1Lname.setText(tLname1);
-      txtbuyer2Lname.setText(tLname2);
-      txtbuyer3Lname.setText(tLname3);
-      txtbuyer4Lname.setText(tLname4);
-      txtTenant5Lname.setText(tLname5);
-      txtbuyer1FName.setText(tFname1);
-      txtbuyer2FName.setText(tFname2);
-      txtbuyer3FName.setText(tFname3);
-      txtbuyer4FName.setText(tFname4);
-      txtTenant5FName.setText(tFname5);
-      textp_unitNumber.setText(unitNumber);
-      txtp_streetNum.setText(streetNum);
+      txtseller1.setText(landlordList[0]?.landlord ?? "");
+
+      txtseller2.setText(landlordList[1]?.landlord ?? "");
+      txtseller3.setText(landlordList[2]?.landlord ?? "");
+      txtseller4.setText(landlordList[3]?.landlord ?? "");
+      txtLandlord5.setText(landlordList[4]?.landlord ?? "");
+
+      txtbuyer1Lname.setText(tenantList[1]?.tenantLastName ?? "");
+      txtbuyer2Lname.setText(tenantList[2]?.tenantLastName ?? "");
+      txtbuyer3Lname.setText(tenantList[3]?.tenantLastName ?? "");
+      txtbuyer4Lname.setText(tenantList[4]?.tenantLastName ?? "");
+      txtTenant5Lname.setText(tenantList[5]?.tenantLastName ?? "");
+      txtbuyer1FName.setText(tenantList[1]?.tenantFirstName ?? "");
+      txtbuyer2FName.setText(tenantList[2]?.tenantFirstName ?? "");
+      txtbuyer3FName.setText(tenantList[3]?.tenantFirstName ?? "");
+      txtbuyer4FName.setText(tenantList[4]?.tenantFirstName ?? "");
+      txtTenant5FName.setText(tenantList[5]?.tenantFirstName ?? "");
+      textp_unitNumber.setText(unit);
+      txtp_streetNum.setText(streetNumber);
       txtp_street.setText(streetName);
 
       // page 2 GET
       const txtp_city = form.getField("txtp_city");
       const txtp_zipcode = form.getField("txtp_zipcode");
       const txtParkingInfo = form.getField("txtParkingInfo");
-      const inCondo_n = form.getField("inCondo_n");
-      const inCondo_y = form.getField("inCondo_y");
+      const inCondo_n = form.getCheckBox("inCondo_n");
+      const inCondo_y = form.getCheckBox("inCondo_y");
       const txtSellUnit = form.getField("txtSellUnit");
       const txtS_streetnum = form.getField("txtS_streetnum");
       const txtS_street = form.getField("txtS_street");
@@ -196,30 +147,30 @@ app.post("/createForm", (req, res) => {
       const txtS_city = form.getField("txtS_city");
       const txtS_state = form.getField("txtS_state");
       const txtS_zipcode = form.getField("txtS_zipcode");
-      const emailDocY = form.getField("emailDocY");
-      const emailDocN = form.getField("emailDocN");
+      const emailDocY = form.getCheckBox("emailDocY");
+      const emailDocN = form.getCheckBox("emailDocN");
       const txtDocEmail = form.getField("txtDocEmail");
-      const emContY = form.getField("emContY");
-      const emContN = form.getField("emContN");
+      const emContY = form.getCheckBox("emContY");
+      const emContN = form.getCheckBox("emContN");
       const txtEmergencyInfo = form.getField("txtEmergencyInfo");
       const txtLeaseStartDate = form.getField("txtLeaseStartDate");
-      const fixedOpt = form.getField("fixedOpt");
+      const fixedOpt = form.getCheckBox("fixedOpt");
       const txtLeaseEndDate = form.getField("txtLeaseEndDate");
-      const monthOpt = form.getField("monthOpt");
-      const otherOpt = form.getField("otherOpt");
+      const monthOpt = form.getCheckBox("monthOpt");
+      const otherOpt = form.getCheckBox("otherOpt");
       const txtTenancyOther = form.getField("txtTenancyOther");
       const txtRentPaidOn = form.getField("txtRentPaidOn");
-      const rentPaidMonth = form.getField("rentPaidMonth");
-      const rentPaidOther = form.getField("rentPaidOther");
+      const rentPaidMonth = form.getCheckBox("rentPaidMonth");
+      const rentPaidOther = form.getCheckBox("rentPaidOther");
       const txtRentOther = form.getField("txtRentOther");
       const txtp_MonthlyRentAmount = form.getField("txtp_MonthlyRentAmount");
 
       // page 2 SET
       txtp_city.setText(city);
-      txtp_zipcode.setText(posCode);
-      txtParkingInfo.setText(parking);
-      inCondo_n.setText(inCondoN);
-      inCondo_y.setText(inCondoY);
+      txtp_zipcode.setText(postalCode);
+      txtParkingInfo.setText(parkingSpace);
+      inCondo === "yes" ? inCondo_y.check() : inCondo_n.check();
+
       txtSellUnit.setText(contUnit);
       txtS_streetnum.setText(contStreetNum);
       txtS_street.setText(contStreetName);
@@ -227,22 +178,32 @@ app.post("/createForm", (req, res) => {
       txtS_city.setText(contCity);
       txtS_state.setText(contProv);
       txtS_zipcode.setText(contPost);
-      emailDocY.setText(emailNoticeY);
-      emailDocN.setText(emailNoticeN);
+      emailNotice === "yes" ? emailDocY.check() : emailDocN.check();
+
       txtDocEmail.setText(email);
-      emContY.setText(emCont_Y);
-      emContN.setText(emCont_N);
-      txtEmergencyInfo.setText(emCont);
+
+      emCont === "yes" ? emContY.check() : emContN.check();
+
+      txtEmergencyInfo.setText(emContInfo);
       txtLeaseStartDate.setText(startDate);
-      fixedOpt.setText(fixedTen);
+      tenancyType === "fixed"
+        ? fixedOpt.check()
+        : tenancyType === "monthly"
+        ? monthOpt.check()
+        : tenancyType === "other"
+        ? otherOpt.check()
+        : null;
+
       txtLeaseEndDate.setText(fixedTenDate);
-      monthOpt.setText(monthTen);
-      otherOpt.setText(otherTen);
-      txtTenancyOther.setText(rentDay);
-      txtRentPaidOn.setText(city);
-      rentPaidMonth.setText(monthly);
-      rentPaidOther.setText(weekly);
-      txtRentOther.setText();
+
+      txtTenancyOther.setText(otherTenDetails);
+      txtRentPaidOn.setText(rentDay);
+      rentType === "month"
+        ? rentPaidMonth.check()
+        : rentType === "other"
+        ? rentPaidOther.check()
+        : null;
+      txtRentOther.setText(otherRentDetails);
       txtp_MonthlyRentAmount.setText(baseRent);
 
       // page 3 GET
@@ -255,16 +216,16 @@ app.post("/createForm", (req, res) => {
       const txtPartRentStartDate = form.getField("txtPartRentStartDate");
       const txtPartRentEndDate = form.getField("txtPartRentEndDate");
       const txtAddFee = form.getField("txtAddFee");
-      const gas_n = form.getField("gas_n");
-      const gas_y = form.getField("gas_y");
-      const ac_n = form.getField("ac_n");
-      const ac_y = form.getField("ac_y");
-      const addStore_n = form.getField("addStore_n");
-      const addStore_y = form.getField("addStore_y");
-      const laundry_n = form.getField("laundry_n");
-      const laundry_y = form.getField("laundry_y");
-      const guesp_n = form.getField("guesp_n");
-      const guesp_y = form.getField("guesp_y");
+      const gas_n = form.getCheckBox("gas_n");
+      const gas_y = form.getCheckBox("gas_y");
+      const ac_n = form.getCheckBox("ac_n");
+      const ac_y = form.getCheckBox("ac_y");
+      const addStore_n = form.getCheckBox("addStore_n");
+      const addStore_y = form.getCheckBox("addStore_y");
+      const laundry_n = form.getCheckBox("laundry_n");
+      const laundry_y = form.getCheckBox("laundry_y");
+      const guesp_n = form.getCheckBox("guesp_n");
+      const guesp_y = form.getCheckBox("guesp_y");
 
       // page 3 SET
       txtMonthlyParking.setText(parkingRent);
@@ -276,16 +237,11 @@ app.post("/createForm", (req, res) => {
       txtPartRentStartDate.setText(coverDateFrom);
       txtPartRentEndDate.setText(coverDateTo);
       txtAddFee.setText(nsfCharge);
-      gas_n.setText(gasN);
-      gas_y.setText(gasY);
-      ac_n.setText(acN);
-      ac_y.setText(acY);
-      addStore_n.setText(addStoreN);
-      addStore_y.setText(addStoreY);
-      laundry_n.setText(laundryN);
-      laundry_y.setText(laundryY);
-      guesp_n.setText(guestParkN);
-      guesp_y.setText(guestParkY);
+      gas === "yes" ? gas_y.check() : gas_n.check();
+      ac === "yes" ? ac_y.check() : ac_n.check();
+      addStore === "yes" ? addStore_y.check() : addStore_n.check();
+      laundry === "yes" ? laundry_y.check() : laundry_n.check();
+      guestPark === "yes" ? guesp_y.check() : guesp_n.check();
 
       // page 4 GET
       const txtUtilAddDetails = form.getField("txtUtilAddDetails");
@@ -304,22 +260,43 @@ app.post("/createForm", (req, res) => {
       const dep_amount = form.getField("dep_amount");
 
       // page 4 SET
-      elec_land.setText(elecLandlord);
-      elec_tent.setText(elecTenant);
-      heat_land.setText(heatLandlord);
-      heat_tent.setText(heatTenant);
-      water_land.setText(waterLandlord);
-      water_tent.setText(waterTenants);
-      rent_disc_n.setText(rentDiscN);
-      rent_disc_y.setText(rentDiscY);
-      dep_n.setText(reqDepositN);
-      dep_y.setText(reqDepositY);
-      dep_amount.setText(amountDep);
+      txtUtilAddDetails.setText(otherUtilText1);
+      txtRentDiscAddDetails.setText(rentDiscountDesc);
+
+      electricity === "landlord"
+        ? elec_land.check()
+        : electricity === "tenant"
+        ? elec_tent.check()
+        : null;
+
+      heat === "landlord"
+        ? heat_land.check()
+        : heat === "tenant"
+        ? heat_tent.check()
+        : null;
+      water === "landlord"
+        ? water_land.check()
+        : water === "tenant"
+        ? water_tent.check()
+        : null;
+      rentDeposit === "yes"
+        ? dep_y.check()
+        : rentDeposit === "no"
+        ? dep_n.check()
+        : null;
+
+      rentDiscount === "yes"
+        ? rent_disc_y.check()
+        : rentDiscount === "no"
+        ? rent_disc_n.check()
+        : null;
+
+      dep_amount.setText(depositAmount);
 
       // page 5 GET
       const txtKeyDeposit = form.getField("txtKeyDeposit");
-      // const txtKeyDepositAddDetails = form.getField("txtKeyDepositAddDetails");
-      // const txtSmokingAddDetails = form.getField("txtSmokingAddDetails");
+      const txtKeyDepositAddDetails = form.getField("txtKeyDepositAddDetails");
+      const txtSmokingAddDetails = form.getField("txtSmokingAddDetails");
       const kdep_n = form.getField("kdep_n");
       const kdep_y = form.getField("kdep_y");
       const smk_n = form.getField("smk_n");
@@ -328,23 +305,36 @@ app.post("/createForm", (req, res) => {
       const insur_y = form.getField("insur_y");
 
       // page 5 SET
+      keyDeposit === "yes"
+        ? kdep_y.check()
+        : keyDeposit === "no"
+        ? kdep_n.check()
+        : null;
       txtKeyDeposit.setText(keyDepAmount);
-      kdep_n.setText(keyDepN);
-      kdep_y.setText(keyDepY);
-      smk_n.setText(smokingN);
-      smk_y.setText(smokingY);
-      insur_n.setText(tenInsuranceN);
-      insur_y.setText(tenInsuranceY);
-
+      txtKeyDepositAddDetails.setText(keyDepositDesc);
+      smoking === "yes"
+        ? smk_y.check()
+        : smoking === "no"
+        ? smk_n.check()
+        : null;
+      tenantInsurance === "yes"
+        ? insur_y.check()
+        : tenantInsurance === "no"
+        ? insur_n.check()
+        : null;
+      txtSmokingAddDetails.setText(smokingRules);
       // page 6 GET
       const addTerms_n = form.getCheckBox("addTerms_n");
       const addTerms_y = form.getCheckBox("addTerms_y");
 
       // page 6 SET
-      addTerms_n.setText(addTermN);
-      addTerms_y.setText(addTermY);
+      addTerm === "yes"
+        ? addTerms_y.check()
+        : addTerm === "no"
+        ? addTerms_n.check()
+        : null;
 
-      // page 7 GET
+      // // page 7 GET
       const txtsellersig1 = form.getField("txtsellersig1");
       const txtsellersig2 = form.getField("txtsellersig2");
       const txtsellersig3 = form.getField("txtsellersig3");
@@ -373,34 +363,71 @@ app.post("/createForm", (req, res) => {
       const tsig3_date = form.getField("tsig3_date");
       const tsig4_date = form.getField("tsig4_date");
 
-      // page 7 SET
-      txtsellersig1.setText(signLaName1);
-      txtsellersig2.setText(signLaName2);
-      txtsellersig3.setText(signLaName3);
-      txtsellersig4.setText(signLaName4);
-      sig1.setText(signLa1);
-      sig2.setText(signLa2);
-      sig3.setText(signLa3);
-      sig4.setText(signLa4);
-      sig1_date.setText(signLaDate1);
-      sig2_date.setText(signLaDate2);
-      sig3_date.setText(signLaDate3);
-      sig4_date.setText(signLaDate4);
+      // // page 7 SET
+      txtsellersig1.setText(landlordSignList[0]?.landlordName ?? "");
+      txtsellersig2.setText(landlordSignList[1]?.landlordName ?? "");
+      txtsellersig3.setText(landlordSignList[2]?.landlordName ?? "");
+      txtsellersig4.setText(landlordSignList[3]?.landlordName ?? "");
 
-      txtbuyersig1.setText(signTenName1);
-      txtbuyersig2.setText(signTenName2);
-      txtbuyersig3.setText(signTenName3);
-      txtTenant5Sig.setText(signTenName4);
-      txtTenant6Sig.setText(signTenName5);
-      tsig1.setText(signTen1);
-      tsig2.setText(signTen2);
-      tsig3.setText(signTen3);
-      tsig4.setText(signTen4);
-      tsig5.setText(signTen5);
-      tsig1_date.setText(signTenDate1);
-      tsig2_date.setText(signTenDate2);
-      tsig3_date.setText(signTenDate3);
-      tsig4_date.setText(signTenDate4);
+      const image = await pdfDoc.embedPng(landlordSignList[0].landlordSign);
+      const signPage = pdfDoc.getPages()[6];
+
+      landlordSignList.forEach(async (landlord, index) => {
+        if (typeof landlord.landlordSign === "string") {
+          const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
+          const { width, height } = image.scale(0.17);
+          const adjustments = {
+            0: 35,
+            1: 18,
+            2: 10,
+            3: 6,
+          };
+
+          // ...
+
+          const count =
+            adjustments[index] !== undefined
+              ? adjustments[index]
+              : defaultValue;
+
+          // Calculate Y position based on index
+          const yPosition = 555 - index * 50 - count;
+
+          // Draw the image on the page
+          signPage.drawImage(image, {
+            x: 300, // Adjust the X coordinate as needed
+            y: yPosition, // Adjust the Y coordinate as needed
+            width,
+            height,
+          });
+        } else {
+        }
+      });
+
+      // Step 4: Update the widget's appearance with the embedded image
+
+      // sig2.setText(landlordSignList[1]?.landlordSign ?? "");
+      // sig3.setText(landlordSignList[2]?.landlordSign ?? "");
+      // sig4.setText(landlordSignList[3]?.landlordSign ?? "");
+      // sig1_date.setText(landlordSignList[0]?.landlordSignDate ?? "");
+      // sig2_date.setText(landlordSignList[1]?.landlordSignDate ?? "");
+      // sig3_date.setText(landlordSignList[2]?.landlordSignDate ?? "");
+      // sig4_date.setText(landlordSignList[3]?.landlordSignDate ?? "");
+
+      // txtbuyersig1.setText(tenantSignList[0]?.tenantName ?? "");
+      // txtbuyersig2.setText(tenantSignList[1]?.tenantName ?? "");
+      // txtbuyersig3.setText(tenantSignList[2]?.tenantName ?? "");
+      // txtTenant5Sig.setText(tenantSignList[3]?.tenantName ?? "");
+      // txtTenant6Sig.setText(tenantSignList[4]?.tenantName ?? "");
+      // tsig1.setText(tenantSignList[0]?.tenantSign ?? "");
+      // tsig2.setText(tenantSignList[1]?.tenantSign ?? "");
+      // tsig3.setText(tenantSignList[2]?.tenantSign ?? "");
+      // tsig4.setText(tenantSignList[3]?.tenantSign ?? "");
+      // tsig5.setText(tenantSignList[4]?.tenantSign ?? "");
+      // tsig1_date.setText(tenantSignList[0]?.tenantSignDate ?? "");
+      // tsig2_date.setText(tenantSignList[1]?.tenantSignDate ?? "");
+      // tsig3_date.setText(tenantSignList[2]?.tenantSignDate ?? "");
+      // tsig4_date.setText(tenantSignList[3]?.tenantSignDate ?? "");
 
       // const fieldNames = form.getFields().map((field, index) => {
       //   const type = field.constructor.name;
