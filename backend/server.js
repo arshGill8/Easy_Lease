@@ -3,6 +3,7 @@ import cors from "cors";
 import { PDFDocument, PDFFont } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
 import { isStringObject } from "util/types";
+import { error } from "console";
 
 const port = 3001;
 
@@ -339,10 +340,10 @@ app.post("/createForm", (req, res) => {
       const txtsellersig2 = form.getField("txtsellersig2");
       const txtsellersig3 = form.getField("txtsellersig3");
       const txtsellersig4 = form.getField("txtsellersig4");
-      const sig1 = form.getField("sig1");
-      const sig2 = form.getField("sig2");
-      const sig3 = form.getField("sig3");
-      const sig4 = form.getField("sig4");
+      // const sig1 = form.getField("sig1");
+      // const sig2 = form.getField("sig2");
+      // const sig3 = form.getField("sig3");
+      // const sig4 = form.getField("sig4");
       const sig1_date = form.getField("sig1_date");
       const sig2_date = form.getField("sig2_date");
       const sig3_date = form.getField("sig3_date");
@@ -353,11 +354,11 @@ app.post("/createForm", (req, res) => {
       const txtbuyersig3 = form.getField("txtbuyersig3");
       const txtTenant5Sig = form.getField("txtTenant5Sig");
       const txtTenant6Sig = form.getField("txtTenant6Sig");
-      const tsig1 = form.getField("tsig1");
-      const tsig2 = form.getField("tsig2");
-      const tsig3 = form.getField("tsig3");
-      const tsig4 = form.getField("tsig4");
-      const tsig5 = form.getField("tsig5");
+      // const tsig1 = form.getField("tsig1");
+      // const tsig2 = form.getField("tsig2");
+      // const tsig3 = form.getField("tsig3");
+      // const tsig4 = form.getField("tsig4");
+      // const tsig5 = form.getField("tsig5");
       const tsig1_date = form.getField("tsig1_date");
       const tsig2_date = form.getField("tsig2_date");
       const tsig3_date = form.getField("tsig3_date");
@@ -369,65 +370,93 @@ app.post("/createForm", (req, res) => {
       txtsellersig3.setText(landlordSignList[2]?.landlordName ?? "");
       txtsellersig4.setText(landlordSignList[3]?.landlordName ?? "");
 
-      const image = await pdfDoc.embedPng(landlordSignList[0].landlordSign);
+      sig1_date.setText(landlordSignList[0]?.landlordSignDate ?? "");
+      sig2_date.setText(landlordSignList[1]?.landlordSignDate ?? "");
+      sig3_date.setText(landlordSignList[2]?.landlordSignDate ?? "");
+      sig4_date.setText(landlordSignList[3]?.landlordSignDate ?? "");
+
       const signPage = pdfDoc.getPages()[6];
 
       landlordSignList.forEach(async (landlord, index) => {
-        if (typeof landlord.landlordSign === "string") {
-          const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
-          const { width, height } = image.scale(0.17);
-          const adjustments = {
-            0: 35,
-            1: 18,
-            2: 10,
-            3: 6,
-          };
+        try {
+          if (typeof landlord.landlordSign === "string") {
+            const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
+            const { width, height } = image.scale(0.17);
+            const adjustments = {
+              0: 35,
+              1: 18,
+              2: 10,
+              3: 6,
+            };
 
-          // ...
+            const count =
+              adjustments[index] !== undefined
+                ? adjustments[index]
+                : defaultValue;
 
-          const count =
-            adjustments[index] !== undefined
-              ? adjustments[index]
-              : defaultValue;
+            // Calculate Y position based on index
+            const yPosition = 555 - index * 50 - count;
 
-          // Calculate Y position based on index
-          const yPosition = 555 - index * 50 - count;
-
-          // Draw the image on the page
-          signPage.drawImage(image, {
-            x: 300, // Adjust the X coordinate as needed
-            y: yPosition, // Adjust the Y coordinate as needed
-            width,
-            height,
-          });
-        } else {
+            // Draw the image on the page
+            signPage.drawImage(image, {
+              x: 300, // Adjust the X coordinate as needed
+              y: yPosition, // Adjust the Y coordinate as needed
+              width,
+              height,
+            });
+          } else {
+            return console.log(landlord.landlordSign);
+          }
+        } catch (err) {
+          console.log(err);
         }
       });
 
-      // Step 4: Update the widget's appearance with the embedded image
+      tenantSignList.forEach(async (tenant, index) => {
+        try {
+          if (typeof tenant.tenantSign === "string") {
+            const image = await pdfDoc.embedPng(tenant.tenantSign); // Assuming landlordSign is a Buffer or Uint8Array
+            const { width, height } = image.scale(0.17);
+            const adjustments = {
+              0: 35,
+              1: 18,
+              2: 10,
+              3: 6,
+            };
 
-      // sig2.setText(landlordSignList[1]?.landlordSign ?? "");
-      // sig3.setText(landlordSignList[2]?.landlordSign ?? "");
-      // sig4.setText(landlordSignList[3]?.landlordSign ?? "");
-      // sig1_date.setText(landlordSignList[0]?.landlordSignDate ?? "");
-      // sig2_date.setText(landlordSignList[1]?.landlordSignDate ?? "");
-      // sig3_date.setText(landlordSignList[2]?.landlordSignDate ?? "");
-      // sig4_date.setText(landlordSignList[3]?.landlordSignDate ?? "");
+            const count =
+              adjustments[index] !== undefined
+                ? adjustments[index]
+                : defaultValue;
 
-      // txtbuyersig1.setText(tenantSignList[0]?.tenantName ?? "");
-      // txtbuyersig2.setText(tenantSignList[1]?.tenantName ?? "");
-      // txtbuyersig3.setText(tenantSignList[2]?.tenantName ?? "");
-      // txtTenant5Sig.setText(tenantSignList[3]?.tenantName ?? "");
-      // txtTenant6Sig.setText(tenantSignList[4]?.tenantName ?? "");
-      // tsig1.setText(tenantSignList[0]?.tenantSign ?? "");
-      // tsig2.setText(tenantSignList[1]?.tenantSign ?? "");
-      // tsig3.setText(tenantSignList[2]?.tenantSign ?? "");
-      // tsig4.setText(tenantSignList[3]?.tenantSign ?? "");
-      // tsig5.setText(tenantSignList[4]?.tenantSign ?? "");
-      // tsig1_date.setText(tenantSignList[0]?.tenantSignDate ?? "");
-      // tsig2_date.setText(tenantSignList[1]?.tenantSignDate ?? "");
-      // tsig3_date.setText(tenantSignList[2]?.tenantSignDate ?? "");
-      // tsig4_date.setText(tenantSignList[3]?.tenantSignDate ?? "");
+            // Calculate Y position based on index
+            const yPosition = 355 - index * 50 - count;
+
+            // Draw the image on the page
+            signPage.drawImage(image, {
+              x: 300, // Adjust the X coordinate as needed
+              y: yPosition, // Adjust the Y coordinate as needed
+              width,
+              height,
+            });
+          } else {
+            return console.log(tenant.tenantSign);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      });
+
+      txtbuyersig1.setText(tenantSignList[0]?.tenantName ?? "");
+      txtbuyersig2.setText(tenantSignList[1]?.tenantName ?? "");
+      txtbuyersig3.setText(tenantSignList[2]?.tenantName ?? "");
+      txtTenant5Sig.setText(tenantSignList[3]?.tenantName ?? "");
+      txtTenant6Sig.setText(tenantSignList[4]?.tenantName ?? "");
+
+      tsig1_date.setText(tenantSignList[0]?.tenantSignDate ?? "");
+      tsig2_date.setText(tenantSignList[1]?.tenantSignDate ?? "");
+      tsig3_date.setText(tenantSignList[2]?.tenantSignDate ?? "");
+      tsig4_date.setText(tenantSignList[3]?.tenantSignDate ?? "");
 
       // const fieldNames = form.getFields().map((field, index) => {
       //   const type = field.constructor.name;

@@ -25,7 +25,7 @@ export default function Form2({ rentalData, handleRentalData }) {
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={unit}
-            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full mb-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
@@ -35,7 +35,7 @@ export default function Form2({ rentalData, handleRentalData }) {
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={streetNumber}
-            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full mb-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
@@ -45,7 +45,7 @@ export default function Form2({ rentalData, handleRentalData }) {
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={streetName}
-            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full mb-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>
@@ -55,7 +55,7 @@ export default function Form2({ rentalData, handleRentalData }) {
             type="text"
             onChange={(e) => handleRentalData(e)}
             value={city}
-            className="w-full  mb-4  inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="w-full mb-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
           />
         </div>
         <div>

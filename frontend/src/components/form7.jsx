@@ -39,7 +39,7 @@ export default function Form7({
   const handleTenantEnd = (index) => {
     const signatureDataURL = tenantSignatureRefs.current
       .getTrimmedCanvas()
-      .toData("image/png");
+      .toDataURL("image/png");
 
     handleTenantSignChange(signatureDataURL, index, "tenantSign");
   };
@@ -80,6 +80,7 @@ export default function Form7({
                   ref={landSignatureRefs}
                   name="landlordSign"
                   onEnd={() => handleLandlordEnd(index)}
+                  willReadFrequently={true}
                 />
               </div>
               <input
@@ -144,6 +145,7 @@ export default function Form7({
                   Tenant signature
                 </label>
                 <SignatureCanvas
+                  maxLength={80}
                   penColor="black"
                   canvasProps={{
                     className: "w-4/5 mb-3.5   h-24 border-b-2 border-black ",
@@ -151,6 +153,7 @@ export default function Form7({
                   ref={tenantSignatureRefs}
                   name="tenantSign"
                   onEnd={() => handleTenantEnd(index)}
+                  willReadFrequently={true}
                 />
               </div>
               <input

@@ -20,7 +20,7 @@ export default function Form6({ depositData, handleDepositData }) {
         <h1 className="py-4 text-lg text-center ">Rent Discount?</h1>
         <div className="flex justify-center gap-20 ">
           <div className="flex flex-col gap-2 ">
-            <label className>Yes</label>
+            <label>Yes</label>
             {/* <label>The lawful rent will be discounted as follows: </label> */}
             <input
               name="rentDiscount"

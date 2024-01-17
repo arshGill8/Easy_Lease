@@ -14,7 +14,7 @@ export default function Form3({ contactData, handleContactData }) {
   } = contactData;
 
   return (
-    <div className="w-full" mb-4>
+    <div className="w-full mb-4">
       <form className="my-8">
         <h1 className="mb-8 text-center flex justify-center ">
           Address for Giving Notices/Documents to the Landlord

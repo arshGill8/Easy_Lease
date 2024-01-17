@@ -139,7 +139,6 @@ export default function App() {
   };
   //tenant signatures
   const handleTenantSignChange = (value, index, property) => {
-    console.log({ [property]: value });
     setTenantSignList((prevTenantSignList) =>
       prevTenantSignList.map((item, i) =>
         i === index
@@ -250,7 +249,7 @@ export default function App() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       landlordList,
@@ -264,12 +263,11 @@ export default function App() {
       ...depositData,
     };
 
-    axios
-      .post("http://localhost:3001/createForm", data)
-      .then(() => console.log("data sent", data))
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios.post("http://localhost:3001/createForm", data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleNext = () => {
