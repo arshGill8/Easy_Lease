@@ -3,7 +3,7 @@ import cors from "cors";
 import { PDFDocument, PDFFont } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
 import { isStringObject } from "util/types";
-import { error } from "console";
+import open from "open";
 
 const port = 3001;
 
@@ -85,13 +85,22 @@ app.post("/createForm", (req, res) => {
     addTerm,
   } = req.body;
 
-  console.log(landlordList[0].landlord);
-
   async function fillForm(input, output) {
     try {
       const pdfDoc = await PDFDocument.load(await readFile(input));
 
       const form = pdfDoc.getForm();
+
+      form.getFields().forEach((field) => {
+        const fieldType = field.constructor.name;
+        if (fieldType === "Text") {
+          field.setValue(""); // Set text fields to empty string
+        } else if (fieldType === "CheckBox") {
+          field.uncheck(); // Uncheck checkboxes
+        } else if (fieldType === "Dropdown") {
+          field.select(0); // Select the first option for dropdowns
+        } // Add more conditions as needed for other field types
+      });
 
       // page 1 GET
       const txtseller1 = form.getField("txtseller1");
@@ -377,75 +386,93 @@ app.post("/createForm", (req, res) => {
 
       const signPage = pdfDoc.getPages()[6];
 
-      landlordSignList.forEach(async (landlord, index) => {
-        try {
-          if (typeof landlord.landlordSign === "string") {
-            const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
-            const { width, height } = image.scale(0.17);
-            const adjustments = {
-              0: 35,
-              1: 18,
-              2: 10,
-              3: 6,
-            };
+      try {
+        await Promise.all(
+          landlordSignList.map(async (landlord, index) => {
+            try {
+              const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
+              const { width, height } = image.scale(0.17);
+              const adjustments = {
+                0: 35,
+                1: 18,
+                2: 10,
+                3: 6,
+              };
 
-            const count =
-              adjustments[index] !== undefined
-                ? adjustments[index]
-                : defaultValue;
+              const count =
+                adjustments[index] !== undefined
+                  ? adjustments[index]
+                  : defaultValue;
 
-            // Calculate Y position based on index
-            const yPosition = 555 - index * 50 - count;
+              // Calculate Y position based on index
+              const yPosition = 555 - index * 50 - count;
 
-            // Draw the image on the page
-            signPage.drawImage(image, {
-              x: 300, // Adjust the X coordinate as needed
-              y: yPosition, // Adjust the Y coordinate as needed
-              width,
-              height,
-            });
-          } else {
-            return console.log(landlord.landlordSign);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      });
+              // Draw the image on the page
+              signPage.drawImage(image, {
+                x: 300, // Adjust the X coordinate as needed
+                y: yPosition, // Adjust the Y coordinate as needed
+                width,
+                height,
+              });
+            } catch (err) {
+              console.log(
+                err,
+                "Error processing landlord sign at index",
+                index
+              );
+            }
+          })
+        );
+      } catch (error) {
+        console.log(
+          "An error occurred while processing landLordSignList:",
+          error
+        );
+        // Handle the error at the higher level or rethrow it if necessary
+        // throw error;
+      }
 
-      tenantSignList.forEach(async (tenant, index) => {
-        try {
-          if (typeof tenant.tenantSign === "string") {
-            const image = await pdfDoc.embedPng(tenant.tenantSign); // Assuming landlordSign is a Buffer or Uint8Array
-            const { width, height } = image.scale(0.17);
-            const adjustments = {
-              0: 35,
-              1: 18,
-              2: 10,
-              3: 6,
-            };
+      try {
+        await Promise.all(
+          tenantSignList.map(async (tenant, index) => {
+            try {
+              const image = await pdfDoc.embedPng(tenant.tenantSign);
+              const { width, height } = image.scale(0.17);
+              const adjustments = {
+                0: 35,
+                1: 18,
+                2: 10,
+                3: 6,
+              };
 
-            const count =
-              adjustments[index] !== undefined
-                ? adjustments[index]
-                : defaultValue;
+              const count =
+                adjustments[index] !== undefined
+                  ? adjustments[index]
+                  : defaultValue;
 
-            // Calculate Y position based on index
-            const yPosition = 355 - index * 50 - count;
+              const yPosition = 355 - index * 50 - count;
 
-            // Draw the image on the page
-            signPage.drawImage(image, {
-              x: 300, // Adjust the X coordinate as needed
-              y: yPosition, // Adjust the Y coordinate as needed
-              width,
-              height,
-            });
-          } else {
-            return console.log(tenant.tenantSign);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      });
+              signPage.drawImage(image, {
+                x: 300,
+                y: yPosition,
+                width,
+                height,
+              });
+            } catch (err) {
+              console.log(err, "Error processing tenant sign at index", index);
+              // You may choose to handle the error here or throw it to be caught later
+              // throw err;
+            }
+          })
+        );
+      } catch (error) {
+        console.log(
+          "An error occurred while processing tenantSignList:",
+          error
+        );
+        // Handle the error at the higher level or rethrow it if necessary
+        // throw error;
+      }
 
       txtbuyersig1.setText(tenantSignList[0]?.tenantName ?? "");
       txtbuyersig2.setText(tenantSignList[1]?.tenantName ?? "");
@@ -463,7 +490,6 @@ app.post("/createForm", (req, res) => {
       //   const name = field.getName();
       //   console.log(`${type}: ${name} : ${index}`);
       // });
-
       const pdfBytes = await pdfDoc.save();
 
       await writeFile(output, pdfBytes);
@@ -473,6 +499,8 @@ app.post("/createForm", (req, res) => {
   }
 
   fillForm("./lease_doc.pdf", "output.pdf");
+
+  // open("output.pdf", "_blank");
 });
 
 app.listen(port, console.log(`http://127.0.0.1:${port}`));

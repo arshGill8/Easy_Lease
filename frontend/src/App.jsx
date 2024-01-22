@@ -5,6 +5,7 @@ import Form4 from "./components/form4";
 import Form5 from "./components/form5";
 import Form6 from "./components/form6";
 import Form7 from "./components/form7";
+import FinalPage from "./components/finalPage";
 import { useState } from "react";
 import axios from "axios";
 import bg from "/office_bg.jpg";
@@ -25,7 +26,7 @@ export default function App() {
     city: "",
     postalCode: "",
     parkingSpace: "",
-    inCondo: false,
+    inCondo: "",
   });
 
   const [contactData, setContactData] = useState({
@@ -113,7 +114,6 @@ export default function App() {
   ]);
 
   const handleLandlordSignChange = (value, index, property) => {
-    console.log({ [property]: value });
     setLandlordSignList((prevLandlordSignList) =>
       prevLandlordSignList.map((item, i) =>
         i === index
@@ -263,6 +263,8 @@ export default function App() {
       ...depositData,
     };
 
+    setPage(page + 1);
+
     try {
       await axios.post("http://localhost:3001/createForm", data);
     } catch (err) {
@@ -321,6 +323,7 @@ export default function App() {
         tenantSignList={tenantSignList}
       />
     ),
+    8: <FinalPage />,
   };
 
   const formToRender = formComponents[page] || <Form1 />;
@@ -357,18 +360,20 @@ export default function App() {
     bg-white "
       >
         {formToRender}
-        <div className="w-full flex justify-center gap-3">
-          {page > 1 && (
-            <button
-              className=" font-bold w-1/2  bg-gray-200 hover:bg-gray-400  p-3 rounded hover: shadow-md"
-              onClick={handleBack}
-            >
-              Go Back
-            </button>
-          )}
-          {formButton()}
-        </div>
-        <h2 className="p-3 rounded-full border-2 my-5 mb-4 ">{page}/7</h2>
+        {page < 8 && (
+          <div className="w-full flex justify-center gap-3">
+            {page > 1 && (
+              <button
+                className=" font-bold w-1/2  bg-gray-200 hover:bg-gray-400  p-3 rounded hover: shadow-md"
+                onClick={handleBack}
+              >
+                Go Back
+              </button>
+            )}
+            {formButton()}
+          </div>
+        )}
+        {/* <h2 className="p-3 rounded-full border-2 my-5 mb-4 ">{page}/7</h2> */}
       </div>
     </div>
   );

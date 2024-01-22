@@ -102,8 +102,8 @@ export default function Form2({ rentalData, handleRentalData }) {
                 name="inCondo"
                 type="radio"
                 value="no"
-                checked={inCondo === "no"}
                 onChange={handleRentalData}
+                checked={inCondo === "no"}
                 className="w-full "
               />
             </div>
