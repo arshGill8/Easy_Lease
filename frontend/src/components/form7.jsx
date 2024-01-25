@@ -30,29 +30,38 @@ export default function Form7({
     handleTenantSignRemove(index);
   };
   const handleLandlordEnd = (index) => {
-    const signatureDataURL = landSignatureRefs.current
-      .getTrimmedCanvas()
-      .toDataURL("image/png");
+    if (landSignatureRefs.current[index]) {
+      const signatureDataURL = landSignatureRefs.current[index]
+        .getTrimmedCanvas()
+        .toDataURL("image/png");
 
-    handleLandlordSignChange(signatureDataURL, index, "landlordSign");
+      handleLandlordSignChange(signatureDataURL, index, "landlordSign");
+    } else {
+      console.error(`Ref not found for index ${index}`);
+    }
   };
-  const handleTenantEnd = (index) => {
-    const signatureDataURL = tenantSignatureRefs.current
-      .getTrimmedCanvas()
-      .toDataURL("image/png");
 
-    handleTenantSignChange(signatureDataURL, index, "tenantSign");
+  const handleTenantEnd = (index) => {
+    if (tenantSignatureRefs.current[index]) {
+      const signatureDataURL = tenantSignatureRefs.current[index]
+        .getTrimmedCanvas()
+        .toDataURL("image/png");
+
+      handleTenantSignChange(signatureDataURL, index, "tenantSign");
+    } else {
+      console.error(`Ref not found for index ${index}`);
+    }
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-6">
       <form className="my-8">
-        <div className="mb-10">
+        <div className="mb-24">
           <h1 className="text-center flex justify-center ">
             Landlord(s) Signature
           </h1>
           {landlordSignList.map((singleLandlordSignee, index) => (
-            <div key={index}>
+            <div key={index} className="mb-8">
               <input
                 placeholder="Landlord's Legal Name"
                 name="landlordName"
@@ -75,12 +84,11 @@ export default function Form7({
                   maxLength={80}
                   penColor="black"
                   canvasProps={{
-                    className: "w-4/5 mb-3.5   h-24 border-b-2 border-black ",
+                    className: "w-4/5 mb-3.5 h-24 border-b-2 border-black ",
                   }}
-                  ref={landSignatureRefs}
+                  ref={(ref) => (landSignatureRefs.current[index] = ref)}
                   name="landlordSign"
                   onEnd={() => handleLandlordEnd(index)}
-                  willReadFrequently={true}
                 />
               </div>
               <input
@@ -111,7 +119,7 @@ export default function Form7({
                 {landlordSignList.length - 1 == index &&
                   landlordSignList.length < 5 && (
                     <button
-                      className=" md:w-1/4 ml-auto flex gap-1 items-center justify-center w-2/5  font-medium	 text-white bg-green-500  p-2 py-3 rounded hover:bg-green-600 shadow-md"
+                      className=" md:w-1/6 ml-auto flex gap-1 items-center justify-center w-2/5  font-medium	 text-white bg-green-500  p-2 py-3 rounded hover:bg-green-600 shadow-md"
                       type="button"
                       onClick={addLandlordSignee}
                     >
@@ -124,12 +132,12 @@ export default function Form7({
         </div>
         <div className="mb-10">
           <h1 className="text-center flex justify-center ">
-            Tenant(s)
-            <br /> Signature
+            Tenant(s) <br />
+            Signature
           </h1>
 
           {tenantSignList.map((singleTenantSignee, index) => (
-            <div key={index}>
+            <div key={index} className="mb-8">
               <input
                 placeholder="Tenant's Legal Name"
                 name="tenantName"
@@ -150,10 +158,9 @@ export default function Form7({
                   canvasProps={{
                     className: "w-4/5 mb-3.5   h-24 border-b-2 border-black ",
                   }}
-                  ref={tenantSignatureRefs}
+                  ref={(ref) => (tenantSignatureRefs.current[index] = ref)}
                   name="tenantSign"
                   onEnd={() => handleTenantEnd(index)}
-                  willReadFrequently={true}
                 />
               </div>
               <input
@@ -184,7 +191,7 @@ export default function Form7({
                 {tenantSignList.length - 1 == index &&
                   tenantSignList.length < 5 && (
                     <button
-                      className=" md:w-1/4 ml-auto flex gap-1 items-center justify-center w-2/5  font-medium	 text-white bg-green-500  p-2 py-3 rounded hover:bg-green-600 shadow-md"
+                      className=" md:w-1/6 ml-auto flex gap-1 items-center justify-center w-2/5  font-medium	 text-white bg-green-500  p-2 py-3 rounded hover:bg-green-600 shadow-md"
                       type="button"
                       onClick={addTenantSignee}
                     >

@@ -28,11 +28,11 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
   } = leaseTermData;
 
   return (
-    <div className="w-full">
-      <form className="my-8">
+    <div className="w-full mb-4">
+      <form className="my-8 ">
         <h1 className="mb-8 text-center ">Term of Tenancy Agreement</h1>
 
-        <div className="flex flex-col md:flex-row md:justify-evenly  md:items-baseline  mb-6 ">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline  mb-6">
           <label className="md:text-2xl text-lg text-gray-900 mb-2">
             This tenancy starts on:{" "}
           </label>
@@ -41,12 +41,12 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
             type="date"
             onChange={handleLeaseTermData}
             value={startDate}
-            className="md:text-xl md:w-1/2 inline border border-gray-300 text-gray-900 rounded-lg p-3 focus:shadow-md"
+            className="md:text-xl md:w-1/2 inline border border-gray-300 text-gray-900 rounded-lg p-2 focus:shadow-md"
           />
         </div>
 
         <div className="border rounded py-4 px-2.5">
-          <label className="block mb-5 text-lg text-center text-gray-900">
+          <label className="block mb-5 text-lg p-1 text-center text-gray-900 ">
             This tenancy agreement is for: (select an option below and fill in
             details as needed)
           </label>
@@ -64,14 +64,14 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
             </div>
 
             {tenancyType === "fixed" && (
-              <div className="mb-5">
-                <label className=" mx-1">Ending on:</label>
+              <div className="mb-5 mx-1 ">
+                <label className="">End Date:</label>
                 <input
                   name="fixedTenDate"
                   type="date"
                   onChange={handleLeaseTermData}
                   value={fixedTenDate}
-                  className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                  className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-md p-2 focus:shadow-md"
                 />
               </div>
             )}
@@ -112,7 +112,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
                   placeholder="Weekly"
                   value={otherTenDetails}
                   onChange={(e) => handleLeaseTermData(e)}
-                  className=" mt-6  w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+                  className=" mt-6  w-full inline border border-gray-300 text-gray-900 text-md rounded-md p-2 focus:shadow-md"
                 ></input>
               )}
             </div>
@@ -120,7 +120,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
         </div>
         <h1 className="text-center my-6">Rent</h1>
 
-        <div className="border px-2.5 py-4 ">
+        <div className="border px-2.5 py-4 rounded">
           <div className=" text-center mb-3">
             <p className="text-lg mb-2 w-full">Rent is to be paid on the:</p>
             <input
@@ -129,7 +129,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               value={rentDay}
               name="rentDay"
               onChange={(e) => handleLeaseTermData(e)}
-              className="border w-full  mb-2 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full  mb-2 border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div>
 
@@ -161,7 +161,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               placeholder="Weekly"
               name="otherRentDetails"
               onChange={(e) => handleLeaseTermData(e)}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           )}
         </div>
@@ -178,7 +178,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="baseRent"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
               placeholder="$1800"
             ></input>
           </div>
@@ -189,7 +189,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="parkingRent"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2 border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2 border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div>
           {/* <div className="mb-5">
@@ -201,7 +201,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="otherUtil1"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div> */}
           <div className="mb-5">
@@ -211,7 +211,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="totalRent"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div>
           <div className="mb-5">
@@ -222,7 +222,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="payTo"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div>
           <div className="">
@@ -235,13 +235,13 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
               name="payMethod"
               type="text"
               onChange={handleLeaseTermData}
-              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              className="border w-full mt-2  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
             ></input>
           </div>
         </div>
 
         <div>
-          <div className="border px-2.5 py-4 my-8">
+          <div className="border px-2.5 py-4 my-8 rounded">
             <p className="text-center text-lg mb-3">
               Is the first rental period a partial period?
             </p>
@@ -322,9 +322,9 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
             value={nsfCharge}
             name="nsfCharge"
             onChange={handleLeaseTermData}
-            className="border w-full my-3  border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+            className="border w-full my-3  border-gray-300 text-gray-900 text-md rounded-md p-3 focus:shadow-md"
           ></input>
-          <span> Plus any NSF charges made by the landlord's bank.</span>
+          <span>* Plus any NSF charges made by the landlord's bank.</span>
         </div>
       </form>
     </div>

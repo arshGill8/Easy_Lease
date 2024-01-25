@@ -16,32 +16,34 @@ export default function Form6({ depositData, handleDepositData }) {
 
   return (
     <div className="w-full">
-      <form className="my-4">
-        <h1 className="py-4 text-lg text-center ">Rent Discount?</h1>
-        <div className="flex justify-center gap-20 ">
-          <div className="flex flex-col gap-2 ">
-            <label>Yes</label>
-            {/* <label>The lawful rent will be discounted as follows: </label> */}
-            <input
-              name="rentDiscount"
-              type="radio"
-              value="yes"
-              checked={rentDiscount === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
+      <form className="my-4 mx-1.5">
+        <div className="flex justify-between mb-6">
+          <h2 className="text-lg">Rent Discount?</h2>
+          <div className="flex gap-8">
+            <div className="flex flex-col gap-2 ">
+              <label>Yes</label>
+              {/* <label>The lawful rent will be discounted as follows: </label> */}
+              <input
+                name="rentDiscount"
+                type="radio"
+                value="yes"
+                checked={rentDiscount === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
 
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="rentDiscount"
-              type="radio"
-              value="no"
-              checked={rentDiscount === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="rentDiscount"
+                type="radio"
+                value="no"
+                checked={rentDiscount === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
           </div>
         </div>
         {rentDiscount === "yes" && (
@@ -58,29 +60,31 @@ export default function Form6({ depositData, handleDepositData }) {
             />
           </div>
         )}
-        <h1 className="py-4 text-lg text-center "> Rent Deposit?</h1>
-        <div className="flex  justify-center gap-20 ">
-          <div className="flex flex-col gap-2">
-            <label>Yes</label>
-            <input
-              name="rentDeposit"
-              type="radio"
-              value="yes"
-              checked={rentDeposit === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="rentDeposit"
-              type="radio"
-              value="no"
-              checked={rentDeposit === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+        <div className="flex justify-between mb-6">
+          <h2 className="text-lg  "> Rent Deposit?</h2>
+          <div className="flex  gap-8 ">
+            <div className="flex flex-col gap-2">
+              <label>Yes</label>
+              <input
+                name="rentDeposit"
+                type="radio"
+                value="yes"
+                checked={rentDeposit === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="rentDeposit"
+                type="radio"
+                value="no"
+                checked={rentDeposit === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
           </div>
         </div>
         {rentDeposit === "yes" && (
@@ -101,30 +105,32 @@ export default function Form6({ depositData, handleDepositData }) {
             </p>
           </>
         )}
-        <h1 className="py-4 text-lg text-center">Key Deposit?</h1>
-        <div className="flex  justify-center gap-20 ">
-          <div className="flex flex-col gap-2">
-            <label>Yes</label>
+        <div className="flex justify-between mb-6">
+          <h2 className=" text-lg ">Key Deposit?</h2>
+          <div className="flex  gap-8 ">
+            <div className="flex flex-col gap-2">
+              <label>Yes</label>
 
-            <input
-              name="keyDeposit"
-              type="radio"
-              value="yes"
-              checked={keyDeposit === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="keyDeposit"
-              type="radio"
-              value="no"
-              checked={keyDeposit === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+              <input
+                name="keyDeposit"
+                type="radio"
+                value="yes"
+                checked={keyDeposit === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="keyDeposit"
+                type="radio"
+                value="no"
+                checked={keyDeposit === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
           </div>
         </div>
         {keyDeposit === "yes" && (
@@ -153,99 +159,104 @@ export default function Form6({ depositData, handleDepositData }) {
             ></input>
           </>
         )}
-        <h1 className="py-4 text-lg text-center  ">Smoking Allowed?</h1>
-        <div className="flex   justify-center gap-20 ">
-          <div className="flex flex-col gap-2">
-            <label>Yes</label>
-            <input
-              name="smoking"
-              type="radio"
-              value="yes"
-              checked={smoking === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="smoking"
-              type="radio"
-              value="no"
-              checked={smoking === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-        </div>
-        {smoking === "yes" && (
-          <div>
-            <h2 className=" flex justify-center mt-5">
-              Provide description of smoking rules{" "}
-            </h2>
-            <input
-              name="smokingRules"
-              value={smokingRules}
-              onChange={handleDepositData}
-              className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
-            ></input>
-          </div>
-        )}
-        <h1 className="py-4 text-lg text-center ">
-          Tenant's Insurance Required?
-        </h1>
-        <div className="flex  justify-center gap-20">
-          <div className="flex flex-col gap-2">
-            <label>Yes </label>
-            <input
-              name="tenantInsurance"
-              type="radio"
-              value="yes"
-              checked={tenantInsurance === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="tenantInsurance"
-              type="radio"
-              value="no"
-              checked={tenantInsurance === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
-          </div>
-        </div>{" "}
-        <h1 className="py-4 text-lg text-center "> Additional Terms?</h1>
-        <div className="flex  justify-center gap-20 ">
-          <div className="flex flex-col gap-2">
-            <label>Yes</label>
-            <input
-              name="addTerm"
-              type="radio"
-              value="yes"
-              checked={addTerm === "yes"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+        <div className="flex justify-between mb-6">
+          <h2 className=" text-lg   ">Smoking Allowed?</h2>
+          <div className="flex   gap-8 ">
+            <div className="flex flex-col gap-2">
+              <label>Yes</label>
+              <input
+                name="smoking"
+                type="radio"
+                value="yes"
+                checked={smoking === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="smoking"
+                type="radio"
+                value="no"
+                checked={smoking === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label>No</label>
-            <input
-              name="addTerm"
-              type="radio"
-              value="no"
-              checked={addTerm === "no"}
-              onChange={handleDepositData}
-              className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-            />
+          {smoking === "yes" && (
+            <div>
+              <h2 className=" flex justify-center mt-5">
+                Provide description of smoking rules{" "}
+              </h2>
+              <input
+                name="smokingRules"
+                value={smokingRules}
+                onChange={handleDepositData}
+                className="w-full mt-2 inline border border-gray-300 text-gray-900 text-md rounded-lg p-2 focus:shadow-md"
+              ></input>
+            </div>
+          )}
+        </div>
+        <div className="flex justify-between mb-6">
+          <h2 className=" text-lg  ">Tenant's Insurance Required?</h2>
+          <div className="flex  gap-8">
+            <div className="flex flex-col gap-2">
+              <label>Yes </label>
+              <input
+                name="tenantInsurance"
+                type="radio"
+                value="yes"
+                checked={tenantInsurance === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="tenantInsurance"
+                type="radio"
+                value="no"
+                checked={tenantInsurance === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+          </div>{" "}
+        </div>
+        <div className="flex justify-between mb-5">
+          <h2 className=" text-lg  "> Additional Terms?</h2>
+          <div className="flex  gap-8 ">
+            <div className="flex flex-col gap-2">
+              <label>Yes</label>
+              <input
+                name="addTerm"
+                type="radio"
+                value="yes"
+                checked={addTerm === "yes"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>No</label>
+              <input
+                name="addTerm"
+                type="radio"
+                value="no"
+                checked={addTerm === "no"}
+                onChange={handleDepositData}
+                className="w-full inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
+              />
+            </div>
           </div>
         </div>
         {addTerm === "yes" && (
-          <p className="my-2 text-sm text-center">
+          <p className="my-2 text-sm text-center mb-6">
             *This tenancy agreement includes an attachment with additional terms
             that the landlord and tenant agreed to.
           </p>

@@ -91,16 +91,16 @@ app.post("/createForm", (req, res) => {
 
       const form = pdfDoc.getForm();
 
-      form.getFields().forEach((field) => {
-        const fieldType = field.constructor.name;
-        if (fieldType === "Text") {
-          field.setValue(""); // Set text fields to empty string
-        } else if (fieldType === "CheckBox") {
-          field.uncheck(); // Uncheck checkboxes
-        } else if (fieldType === "Dropdown") {
-          field.select(0); // Select the first option for dropdowns
-        } // Add more conditions as needed for other field types
-      });
+      // form.getFields().forEach((field) => {
+      //   const fieldType = field.constructor.name;
+      //   if (fieldType === "Text") {
+      //     field.setValue(""); // Set text fields to empty string
+      //   } else if (fieldType === "CheckBox") {
+      //     field.uncheck(); // Uncheck checkboxes
+      //   } else if (fieldType === "Dropdown") {
+      //     field.select(0); // Select the first option for dropdowns
+      //   } // Add more conditions as needed for other field types
+      // });
 
       // page 1 GET
       const txtseller1 = form.getField("txtseller1");
@@ -108,38 +108,42 @@ app.post("/createForm", (req, res) => {
       const txtseller3 = form.getField("txtseller3");
       const txtseller4 = form.getField("txtseller4");
       const txtLandlord5 = form.getField("txtLandlord5");
+
       const txtbuyer1Lname = form.getField("txtbuyer1LName");
       const txtbuyer2Lname = form.getField("txtbuyer2LName");
       const txtbuyer3Lname = form.getField("txtbuyer3LName");
       const txtbuyer4Lname = form.getField("txtbuyer4LName");
       const txtTenant5Lname = form.getField("txtTenant5LName");
+
       const txtbuyer1FName = form.getField("txtbuyer1FName");
       const txtbuyer2FName = form.getField("txtbuyer2FName");
       const txtbuyer3FName = form.getField("txtbuyer3FName");
       const txtbuyer4FName = form.getField("txtbuyer4FName");
       const txtTenant5FName = form.getField("txtTenant5FName");
+
       const textp_unitNumber = form.getField("txtp_unitNumber");
       const txtp_streetNum = form.getField("txtp_streetnum");
       const txtp_street = form.getField("txtp_street");
 
       // page 1 SET
       txtseller1.setText(landlordList[0]?.landlord ?? "");
-
       txtseller2.setText(landlordList[1]?.landlord ?? "");
       txtseller3.setText(landlordList[2]?.landlord ?? "");
       txtseller4.setText(landlordList[3]?.landlord ?? "");
       txtLandlord5.setText(landlordList[4]?.landlord ?? "");
 
-      txtbuyer1Lname.setText(tenantList[1]?.tenantLastName ?? "");
-      txtbuyer2Lname.setText(tenantList[2]?.tenantLastName ?? "");
-      txtbuyer3Lname.setText(tenantList[3]?.tenantLastName ?? "");
-      txtbuyer4Lname.setText(tenantList[4]?.tenantLastName ?? "");
-      txtTenant5Lname.setText(tenantList[5]?.tenantLastName ?? "");
-      txtbuyer1FName.setText(tenantList[1]?.tenantFirstName ?? "");
-      txtbuyer2FName.setText(tenantList[2]?.tenantFirstName ?? "");
-      txtbuyer3FName.setText(tenantList[3]?.tenantFirstName ?? "");
-      txtbuyer4FName.setText(tenantList[4]?.tenantFirstName ?? "");
-      txtTenant5FName.setText(tenantList[5]?.tenantFirstName ?? "");
+      txtbuyer1Lname.setText(tenantList[0]?.tenantLastName ?? "");
+      txtbuyer2Lname.setText(tenantList[1]?.tenantLastName ?? "");
+      txtbuyer3Lname.setText(tenantList[2]?.tenantLastName ?? "");
+      txtbuyer4Lname.setText(tenantList[3]?.tenantLastName ?? "");
+      txtTenant5Lname.setText(tenantList[4]?.tenantLastName ?? "");
+
+      txtbuyer1FName.setText(tenantList[0]?.tenantFirstName ?? "");
+      txtbuyer2FName.setText(tenantList[1]?.tenantFirstName ?? "");
+      txtbuyer3FName.setText(tenantList[2]?.tenantFirstName ?? "");
+      txtbuyer4FName.setText(tenantList[3]?.tenantFirstName ?? "");
+      txtTenant5FName.setText(tenantList[4]?.tenantFirstName ?? "");
+
       textp_unitNumber.setText(unit);
       txtp_streetNum.setText(streetNumber);
       txtp_street.setText(streetName);

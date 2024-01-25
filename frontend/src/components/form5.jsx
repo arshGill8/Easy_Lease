@@ -19,13 +19,13 @@ export default function Form4({ utilityData, handleUtilityData }) {
   } = utilityData;
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-6">
       <form className="my-4">
-        <h1 className="py-4 text-center text-xl flex justify-center mb-4">
+        <h1 className="py-4 text-center text-lg flex justify-center mb-4">
           The following services are included in the lawful rent for the rental
           unit, as specified:
         </h1>
-        <div className="px-2  rounded   ">
+        <div className="px-2">
           <div className="flex justify-between  mb-4 ">
             <h3 className="">Gas</h3>
 
@@ -87,7 +87,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
           </div>
 
           <div className="flex justify-between mb-4">
-            <h3>Additional storage space</h3>
+            <h3>Additional storage</h3>
 
             <div className="flex gap-8 ">
               <div className="flex flex-col gap-2">
@@ -172,7 +172,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
             </div>
           </div>
 
-          <div className="flex justify-between mb-4">
+          {/* <div className="flex justify-between mb-4">
             <h3>Other</h3>
             <div className="flex gap-8 ">
               <div className="flex flex-col gap-2">
@@ -198,7 +198,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           {otherUtil1 === "yes" && (
             <input
               type="text"
@@ -209,7 +209,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
             ></input>
           )}
         </div>
-        <h1 className="py-4 text-center text-xl flex justify-center mb-4">
+        <h1 className="py-4 text-center text-lg flex justify-center mb-4 mt-8">
           The following utilities are the responsibility of:{" "}
         </h1>
 
@@ -298,7 +298,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
             </div>
           </div>
         </div>
-        <label>
+        {/* <label className="">
           If the tenant is responsible for any utilities, provide details of the
           arrangement, e.g. tenant sets up account with and pays the utility
           provider, tenant pays a portion of the utility costs (if necessary add
@@ -310,7 +310,7 @@ export default function Form4({ utilityData, handleUtilityData }) {
           name="tenantUtilDetails"
           onChange={handleUtilityData}
           className="w-full mt-4 inline border border-gray-300 text-gray-900 text-md rounded-lg p-3 focus:shadow-md"
-        ></input>
+        ></input> */}
       </form>
     </div>
   );

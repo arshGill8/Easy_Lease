@@ -332,10 +332,10 @@ export default function App() {
     if (page === 7) {
       return (
         <button
-          className="font-bold	bg-green-500 w-1/2 p-3 rounded hover:bg-green-600 shadow-md "
+          className="font-bold	bg-green-500 w-1/2 p-3 rounded hover:bg-green-600 shadow-md text-white "
           onClick={handleSubmit}
         >
-          Submit
+          Complete
         </button>
       );
     }
