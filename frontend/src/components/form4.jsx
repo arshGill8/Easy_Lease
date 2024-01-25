@@ -52,7 +52,7 @@ export default function Form4({ leaseTermData, handleLeaseTermData }) {
           </label>
           <div>
             <div className="flex mb-5 justify-between mx-1">
-              <label className="">Fixed Length</label>
+              <label className="">Fixed length</label>
               <input
                 name="tenancyType"
                 type="radio"
