@@ -9,7 +9,14 @@ const port = 3001;
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://easy-lease.vercel.app/"],
+    methods: ["POST"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(
   express.urlencoded({
