@@ -10,7 +10,7 @@ import { useState } from "react";
 import axios from "axios";
 import bg from "/office_bg.jpg";
 
-const baseUrl = "https://easylease.onrender.com";
+const baseUrl = "easy-lease-api.vercel.app";
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -268,7 +268,7 @@ export default function App() {
     setPage(page + 1);
 
     try {
-      await axios.post("http://localhost:3001/createForm", data);
+      await axios.post(`${baseUrl}/createForm`, data);
     } catch (err) {
       console.error(err);
     }

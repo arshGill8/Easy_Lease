@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument, PDFFont } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-import { isStringObject } from "util/types";
-import open from "open";
+// import { isStringObject } from "util/types";
+// import open from "open";
 
 const port = 3001;
 
