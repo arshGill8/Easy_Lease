@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [],
+    origin: ["https://easy-lease-frontend.vercel.app"],
     methods: ["POST"],
     credentials: true,
   })
