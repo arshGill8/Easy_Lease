@@ -10,6 +10,8 @@ import { useState } from "react";
 import axios from "axios";
 import bg from "/office_bg.jpg";
 
+const baseUrl = "https://easylease.onrender.com";
+
 export default function App() {
   const [page, setPage] = useState(1);
 
