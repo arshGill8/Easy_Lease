@@ -1,28 +1,30 @@
 import express from "express";
 import cors from "cors";
-import { PDFDocument, PDFFont } from "pdf-lib";
+import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-// import { isStringObject } from "util/types";
 // import open from "open";
 
-const port = 3001;
-
 const app = express();
+const port = 3001;
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: "https://easy-lease-frontend.vercel.app",
+//     methods: ["POST"],
+//     credentials: true,
+//   })
+// );
 
-app.use(
-  cors({
-    origin: "https://easy-lease-frontend.vercel.app",
-    methods: ["POST"],
-    credentials: true,
-  })
-);
+// app.use(express.json());
+// app.use(
+//   express.urlencoded({
+//     extended: true,
+//   })
+// );
 
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.get("/", (req, res) => {
+  res.send("Easy Lease Says Hello World");
+});
 
 app.post("/createForm", (req, res) => {
   const {
