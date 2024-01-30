@@ -410,7 +410,19 @@ app.post("/createForm", (req, res) => {
         await Promise.all(
           landlordSignList.map(async (landlord, index) => {
             try {
+              if (!landlord.landlordSign) {
+                console.log(`Warning: Missing landlordSign data at index ${index}`);
+                // You can choose to skip this iteration or handle it in a way that suits your logic
+                return;
+              }
+      
               const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
+              if (!image) {
+                console.log(`Warning: Failed to embed PNG image at index ${index}`);
+                // You can choose to skip this iteration or handle it in a way that suits your logic
+                return;
+              }
+
               const { width, height } = image.scale(0.17);
               const adjustments = {
                 0: 35,
@@ -419,10 +431,7 @@ app.post("/createForm", (req, res) => {
                 3: 6,
               };
 
-              const count =
-                adjustments[index] !== undefined
-                  ? adjustments[index]
-                  : defaultValue;
+              const count = adjustments[index] !== undefined ? adjustments[index] : defaultValue;
 
               // Calculate Y position based on index
               const yPosition = 555 - index * 50 - count;
@@ -448,15 +457,22 @@ app.post("/createForm", (req, res) => {
           "An error occurred while processing landLordSignList:",
           error
         );
-        // Handle the error at the higher level or rethrow it if necessary
-        // throw error;
       }
 
       try {
         await Promise.all(
           tenantSignList.map(async (tenant, index) => {
             try {
+              if(!tenant.tenantSign) {
+                console.log(`Warning: Missing tenantSign data at index ${index}`);
+                return
+              }
               const image = await pdfDoc.embedPng(tenant.tenantSign);
+              if (!image) {
+                console.log(`Warning: Failed to embed PNG image at index ${index}`);
+                // You can choose to skip this iteration or handle it in a way that suits your logic
+                return;
+              }
               const { width, height } = image.scale(0.17);
               const adjustments = {
                 0: 35,
