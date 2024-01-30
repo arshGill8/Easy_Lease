@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-const path = require("path");
-
+import path from "path";
 // import open from "open";
 
 const app = express();
