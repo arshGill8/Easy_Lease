@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-import { path, dirname } from "path";
-// import open from "open";
+import path, { dirname } from 'path'
 
 
 import { fileURLToPath } from 'url';
