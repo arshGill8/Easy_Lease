@@ -507,7 +507,7 @@ app.post("/createForm", (req, res) => {
 
       await writeFile(output, pdfBytes);
     } catch (err) {
-      console.log(err.response.data, err.response);
+      console.error("Error in fillForm:", err);
     }
   }
 

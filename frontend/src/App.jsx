@@ -267,8 +267,9 @@ export default function App() {
 
     try {
       await axios.post("https://easy-lease-api.vercel.app/createForm", data);
+      console.log("Form data submitted successfully!");
     } catch (err) {
-      console.error(err);
+      console.error("Error submitting form data:", err);
     }
   };
 
