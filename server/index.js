@@ -6,7 +6,7 @@ import { readFile, writeFile } from "fs/promises";
 
 const app = express();
 const port = 3001;
-app.use(cors());
+
 app.use(
   cors({
     origin: "https://easy-lease-frontend.vercel.app",
