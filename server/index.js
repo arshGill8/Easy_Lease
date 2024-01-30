@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
+const path = require("path");
+
 // import open from "open";
 
 const app = express();
@@ -511,7 +513,11 @@ app.post("/createForm", (req, res) => {
     }
   }
 
-  fillForm("./public/lease_doc.pdf", "output.pdf");
+  // Get the absolute path to lease_doc.pdf
+  const absolutePath = path.resolve(__dirname, "public", "lease_doc.pdf");
+
+  // Use the absolute path in fillForm
+  fillForm(absolutePath, "output.pdf");
 
   // open("output.pdf", "_blank");
 });
