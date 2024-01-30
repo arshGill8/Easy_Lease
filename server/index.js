@@ -2,8 +2,16 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-import { __dirname, path } from "path";
+import { path } from "path";
 // import open from "open";
+
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express();
 const port = 3001;
