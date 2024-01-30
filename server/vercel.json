@@ -3,6 +3,14 @@
   "builds": [{ "src": "*.js", "use": "@vercel/node" }],
   "routes": [
     {
+      "src": "/createForm",
+      "dest": "/",
+      "methods": ["POST"],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://easy-lease-frontend.vercel.app"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "/"
     }
