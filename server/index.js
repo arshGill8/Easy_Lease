@@ -511,7 +511,7 @@ app.post("/createForm", (req, res) => {
     }
   }
 
-  fillForm("./lease_doc.pdf", "output.pdf");
+  fillForm("./public/lease_doc.pdf", "output.pdf");
 
   // open("output.pdf", "_blank");
 });
