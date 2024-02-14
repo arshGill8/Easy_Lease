@@ -6,6 +6,6 @@
     "server": "node index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
-    "build":"cd frontend && npm run build"
+    "build": "cd frontend && npm run build --production=false"
   }
 }
