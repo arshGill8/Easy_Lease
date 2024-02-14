@@ -1,5 +1,5 @@
 import React from "react";
-import PDF from "../../../server/output.pdf";
+import PDF from "../../../server/public/output.pdf";
 
 export default function done() {
   return (
