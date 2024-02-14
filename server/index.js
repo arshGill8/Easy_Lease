@@ -3,7 +3,12 @@ import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
 import path, { dirname } from 'path'
+const os = require('os');
+const tmpDir = os.tmpdir();
 
+const { v4: uuidv4 } = require('uuid');
+const uniqueFilename = `${uuidv4()}.pdf`;
+const tmpFilePath = path.join(tmpDir, uniqueFilename);
 
 import { fileURLToPath } from 'url';
 
@@ -13,6 +18,7 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3001;
+const outputPath = './public/output.pdf';
 
 app.use(
   cors({
@@ -528,7 +534,7 @@ app.post("/createForm", (req, res) => {
       // });
       const pdfBytes = await pdfDoc.save();
 
-      await writeFile(output, pdfBytes);
+      await writeFile(outputPath, pdfBytes);
     } catch (err) {
       console.error("Error in fillForm:", err);
     }
@@ -538,7 +544,7 @@ app.post("/createForm", (req, res) => {
   const absolutePath = path.resolve(__dirname, "public", "lease_doc.pdf");
 
   // Use the absolute path in fillForm
-  fillForm(absolutePath, "output.pdf");
+  fillForm(absolutePath, outputPath);
 
   // open("output.pdf", "_blank");
 });
