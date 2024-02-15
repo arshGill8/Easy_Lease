@@ -2,18 +2,7 @@ import express from "express";
 import cors from "cors";
 import { PDFDocument } from "pdf-lib";
 import { readFile, writeFile } from "fs/promises";
-import path, { dirname } from 'path'
-const os = require('os');
-const tmpDir = os.tmpdir();
 
-const { v4: uuidv4 } = require('uuid');
-const uniqueFilename = `${uuidv4()}.pdf`;
-const tmpFilePath = path.join(tmpDir, uniqueFilename);
-
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 
 const app = express();
@@ -21,11 +10,7 @@ const port = 3001;
 const outputPath = './public/output.pdf';
 
 app.use(
-  cors({
-    origin: "https://easy-lease-frontend.vercel.app",
-    methods: ["POST"],
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(express.json());
@@ -113,16 +98,7 @@ app.post("/createForm", (req, res) => {
 
       const form = pdfDoc.getForm();
 
-      // form.getFields().forEach((field) => {
-      //   const fieldType = field.constructor.name;
-      //   if (fieldType === "Text") {
-      //     field.setValue(""); // Set text fields to empty string
-      //   } else if (fieldType === "CheckBox") {
-      //     field.uncheck(); // Uncheck checkboxes
-      //   } else if (fieldType === "Dropdown") {
-      //     field.select(0); // Select the first option for dropdowns
-      //   } // Add more conditions as needed for other field types
-      // });
+      
 
       // page 1 GET
       const txtseller1 = form.getField("txtseller1");
@@ -375,10 +351,7 @@ app.post("/createForm", (req, res) => {
       const txtsellersig2 = form.getField("txtsellersig2");
       const txtsellersig3 = form.getField("txtsellersig3");
       const txtsellersig4 = form.getField("txtsellersig4");
-      // const sig1 = form.getField("sig1");
-      // const sig2 = form.getField("sig2");
-      // const sig3 = form.getField("sig3");
-      // const sig4 = form.getField("sig4");
+      
       const sig1_date = form.getField("sig1_date");
       const sig2_date = form.getField("sig2_date");
       const sig3_date = form.getField("sig3_date");
@@ -389,11 +362,7 @@ app.post("/createForm", (req, res) => {
       const txtbuyersig3 = form.getField("txtbuyersig3");
       const txtTenant5Sig = form.getField("txtTenant5Sig");
       const txtTenant6Sig = form.getField("txtTenant6Sig");
-      // const tsig1 = form.getField("tsig1");
-      // const tsig2 = form.getField("tsig2");
-      // const tsig3 = form.getField("tsig3");
-      // const tsig4 = form.getField("tsig4");
-      // const tsig5 = form.getField("tsig5");
+   
       const tsig1_date = form.getField("tsig1_date");
       const tsig2_date = form.getField("tsig2_date");
       const tsig3_date = form.getField("tsig3_date");
@@ -418,14 +387,12 @@ app.post("/createForm", (req, res) => {
             try {
               if (!landlord.landlordSign) {
                 console.log(`Warning: Missing landlordSign data at index ${index}`);
-                // You can choose to skip this iteration or handle it in a way that suits your logic
                 return;
               }
       
               const image = await pdfDoc.embedPng(landlord.landlordSign); // Assuming landlordSign is a Buffer or Uint8Array
               if (!image) {
                 console.log(`Warning: Failed to embed PNG image at index ${index}`);
-                // You can choose to skip this iteration or handle it in a way that suits your logic
                 return;
               }
 
@@ -476,7 +443,6 @@ app.post("/createForm", (req, res) => {
               const image = await pdfDoc.embedPng(tenant.tenantSign);
               if (!image) {
                 console.log(`Warning: Failed to embed PNG image at index ${index}`);
-                // You can choose to skip this iteration or handle it in a way that suits your logic
                 return;
               }
               const { width, height } = image.scale(0.17);
@@ -502,8 +468,7 @@ app.post("/createForm", (req, res) => {
               });
             } catch (err) {
               console.log(err, "Error processing tenant sign at index", index);
-              // You may choose to handle the error here or throw it to be caught later
-              // throw err;
+            
             }
           })
         );
@@ -512,8 +477,7 @@ app.post("/createForm", (req, res) => {
           "An error occurred while processing tenantSignList:",
           error
         );
-        // Handle the error at the higher level or rethrow it if necessary
-        // throw error;
+    
       }
 
       txtbuyersig1.setText(tenantSignList[0]?.tenantName ?? "");
@@ -527,11 +491,7 @@ app.post("/createForm", (req, res) => {
       tsig3_date.setText(tenantSignList[2]?.tenantSignDate ?? "");
       tsig4_date.setText(tenantSignList[3]?.tenantSignDate ?? "");
 
-      // const fieldNames = form.getFields().map((field, index) => {
-      //   const type = field.constructor.name;
-      //   const name = field.getName();
-      //   console.log(`${type}: ${name} : ${index}`);
-      // });
+   
       const pdfBytes = await pdfDoc.save();
 
       await writeFile(outputPath, pdfBytes);
@@ -540,13 +500,10 @@ app.post("/createForm", (req, res) => {
     }
   }
 
-  // Get the absolute path to lease_doc.pdf
-  const absolutePath = path.resolve(__dirname, "public", "lease_doc.pdf");
+  
+  fillForm('./public/lease_doc.pdf', './public/output.pdf');
 
-  // Use the absolute path in fillForm
-  fillForm(absolutePath, outputPath);
 
-  // open("output.pdf", "_blank");
 });
 
 app.listen(port, console.log(`http://127.0.0.1:${port}`));

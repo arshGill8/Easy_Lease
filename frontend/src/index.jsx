@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./main.css";
-import {disableReactDevTools} from '@fvilers/disable-react-devtools'
+// import {disableReactDevTools} from '@fvilers/disable-react-devtools'
 
 // if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
